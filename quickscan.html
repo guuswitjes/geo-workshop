@@ -1,0 +1,1235 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GEO Quickscan — Minor Digital Marketing</title>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-R7P0KW4EHC"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-R7P0KW4EHC');
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Roboto+Condensed:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --han-pink: #e50056;
+      --han-black: #000000;
+      --han-orange: #f5a846;
+      --han-green: #7ac48e;
+      --han-blue: #6ac3ed;
+      --han-alabaster: #f8f8f8;
+      --han-mercury: #e3e3e3;
+      --han-gray: #919191;
+      --font-heading: "Roboto Condensed", "Arial Narrow", sans-serif;
+      --font-body: "Roboto", "Segoe UI", Arial, sans-serif;
+      --sidebar-width: 260px;
+      --content-max: 780px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--han-alabaster);
+      color: var(--han-black);
+      line-height: 1.6;
+    }
+
+    /* ── TOP BAR ── */
+    .topbar {
+      background: var(--han-black);
+      color: white;
+      padding: 0 2rem;
+      height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .topbar-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: white;
+    }
+
+    .han-mark {
+      background: var(--han-pink);
+      color: white;
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 1rem;
+      letter-spacing: 0.05em;
+      padding: 3px 8px;
+      text-transform: uppercase;
+    }
+
+    .topbar-title {
+      font-family: var(--font-heading);
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      color: var(--han-mercury);
+    }
+
+    .topbar-meta {
+      font-size: 0.8rem;
+      color: var(--han-gray);
+    }
+
+    /* ── LAYOUT ── */
+    .layout {
+      display: flex;
+      min-height: calc(100vh - 52px);
+    }
+
+    /* ── SIDEBAR ── */
+    .sidebar {
+      width: var(--sidebar-width);
+      background: white;
+      border-right: 1px solid var(--han-mercury);
+      position: sticky;
+      top: 52px;
+      height: calc(100vh - 52px);
+      overflow-y: auto;
+      flex-shrink: 0;
+      padding: 1.5rem 0;
+    }
+
+    .sidebar-label {
+      font-family: var(--font-heading);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--han-gray);
+      padding: 0 1.25rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .nav-section {
+      margin-bottom: 1.5rem;
+    }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0.45rem 1.25rem;
+      text-decoration: none;
+      color: var(--han-black);
+      font-size: 0.875rem;
+      transition: background 0.15s;
+      border-left: 3px solid transparent;
+    }
+
+    .nav-link:hover {
+      background: var(--han-alabaster);
+      border-left-color: var(--han-mercury);
+    }
+
+    .nav-link.active {
+      border-left-color: var(--han-pink);
+      color: var(--han-pink);
+      font-weight: 500;
+    }
+
+    .nav-link .check-number {
+      width: 22px;
+      height: 22px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-heading);
+      font-size: 0.75rem;
+      font-weight: 700;
+      flex-shrink: 0;
+      background: var(--han-pink);
+      color: white;
+    }
+
+    .nav-link .check-number.score {
+      background: var(--han-orange);
+    }
+
+    /* ── MAIN ── */
+    .main {
+      flex: 1;
+      padding: 2.5rem 2rem 4rem;
+      max-width: calc(var(--content-max) + 4rem);
+    }
+
+    /* ── HERO ── */
+    .hero {
+      background: var(--han-black);
+      color: white;
+      padding: 2.5rem 2rem;
+      margin: -2.5rem -2rem 2.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      right: -60px;
+      top: -60px;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      background: rgba(229,0,86,0.12);
+      pointer-events: none;
+    }
+
+    .hero-tag {
+      background: var(--han-pink);
+      color: white;
+      font-family: var(--font-heading);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      display: inline-block;
+      margin-bottom: 0.75rem;
+    }
+
+    .hero h1 {
+      font-family: var(--font-heading);
+      font-size: 2.2rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      line-height: 1.1;
+      margin-bottom: 0.5rem;
+    }
+
+    .hero-sub {
+      font-size: 1rem;
+      color: #ccc;
+      margin-bottom: 1.25rem;
+    }
+
+    .hero-meta {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .hero-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.85rem;
+      color: var(--han-mercury);
+    }
+
+    .hero-meta-item strong { color: var(--han-orange); }
+
+    /* ── SECTION ── */
+    .section {
+      margin-bottom: 3rem;
+      scroll-margin-top: 70px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .check-badge {
+      width: 52px;
+      height: 52px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-heading);
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: white;
+      flex-shrink: 0;
+      background: var(--han-pink);
+    }
+
+    .check-badge.score { background: var(--han-orange); }
+
+    .section-header-text h2 {
+      font-family: var(--font-heading);
+      font-size: 1.5rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      color: var(--han-black);
+      line-height: 1.1;
+    }
+
+    .section-header-text .section-sub {
+      font-size: 0.9rem;
+      color: var(--han-gray);
+      margin-top: 2px;
+    }
+
+    /* ── CONTENT ELEMENTS ── */
+    h3 {
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--han-black);
+      margin: 1.75rem 0 0.75rem;
+    }
+
+    p { margin-bottom: 0.75rem; font-size: 0.925rem; }
+
+    ul, ol {
+      padding-left: 1.25rem;
+      margin-bottom: 0.75rem;
+      font-size: 0.925rem;
+    }
+
+    li { margin-bottom: 0.3rem; }
+
+    strong { font-weight: 700; }
+
+    a { color: var(--han-pink); }
+    a:hover { text-decoration: underline; }
+
+    .intro-text {
+      font-size: 0.95rem;
+      color: #333;
+      margin-bottom: 1.25rem;
+      padding: 1rem 1.25rem;
+      background: white;
+      border-left: 3px solid var(--han-mercury);
+      border-radius: 0 6px 6px 0;
+    }
+
+    /* ── QUESTION BOXES ── */
+    .question-block {
+      background: white;
+      border: 1px solid var(--han-mercury);
+      border-radius: 8px;
+      padding: 1.25rem;
+      margin-bottom: 1rem;
+    }
+
+    .question-block strong {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-size: 0.9rem;
+    }
+
+    .question-block .hint {
+      font-size: 0.82rem;
+      color: var(--han-gray);
+      margin-bottom: 0.75rem;
+      font-style: italic;
+    }
+
+    .answer-lines {
+      display: block;
+      width: 100%;
+      box-sizing: border-box;
+      background: var(--han-alabaster);
+      border: 1px solid var(--han-mercury);
+      border-radius: 4px;
+      padding: 0.75rem;
+      min-height: 80px;
+      font-size: 0.85rem;
+      font-family: var(--font-body);
+      color: var(--han-black);
+      resize: vertical;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    .answer-lines::placeholder { color: var(--han-gray); }
+    .answer-lines:focus { border-color: var(--han-pink); }
+
+    .answer-lines-small {
+      min-height: 40px;
+    }
+
+    /* ── INTERACTIVE TABLE ── */
+    .interactive-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.875rem;
+      background: white;
+      border-radius: 6px;
+      overflow: hidden;
+      border: 1px solid var(--han-mercury);
+      margin-bottom: 1rem;
+    }
+
+    .interactive-table th {
+      background: var(--han-black);
+      color: white;
+      font-family: var(--font-heading);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.6rem 0.85rem;
+      text-align: left;
+    }
+
+    .interactive-table td {
+      padding: 0.65rem 0.85rem;
+      border-bottom: 1px solid var(--han-mercury);
+      vertical-align: top;
+    }
+
+    .interactive-table tr:last-child td { border-bottom: none; }
+    .interactive-table tr:nth-child(even) td { background: var(--han-alabaster); }
+
+    .interactive-table textarea {
+      display: block;
+      width: 100%;
+      box-sizing: border-box;
+      background: var(--han-alabaster);
+      border: 1px solid var(--han-mercury);
+      border-radius: 4px;
+      padding: 0.5rem;
+      min-height: 36px;
+      font-size: 0.82rem;
+      font-family: var(--font-body);
+      color: var(--han-black);
+      resize: vertical;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+
+    .interactive-table textarea::placeholder { color: var(--han-gray); }
+    .interactive-table textarea:focus { border-color: var(--han-pink); }
+
+    /* ── CODE BLOCK ── */
+    .code-block {
+      background: #1a1a1a;
+      color: #e8e8e8;
+      border-radius: 6px;
+      padding: 1rem;
+      font-family: "Consolas", "Monaco", monospace;
+      font-size: 0.78rem;
+      line-height: 1.55;
+      white-space: pre-wrap;
+      word-break: break-word;
+      margin-bottom: 1rem;
+    }
+
+    /* ── CALLOUT ── */
+    .callout {
+      background: white;
+      border-left: 4px solid var(--han-orange);
+      border-radius: 0 6px 6px 0;
+      padding: 0.85rem 1rem;
+      font-size: 0.875rem;
+      margin-bottom: 1rem;
+    }
+
+    .callout.pink {
+      border-left-color: var(--han-pink);
+    }
+
+    .callout.green {
+      border-left-color: var(--han-green);
+    }
+
+    /* ── BLOCKQUOTE ── */
+    blockquote {
+      background: var(--han-alabaster);
+      border-left: 3px solid var(--han-mercury);
+      padding: 0.75rem 1rem;
+      margin: 0.5rem 0 0.75rem;
+      font-size: 0.875rem;
+      font-style: italic;
+      color: #555;
+    }
+
+    /* ── SOURCE LINK ── */
+    .source-link {
+      font-size: 0.82rem;
+      color: var(--han-gray);
+      margin-top: 0.5rem;
+    }
+
+    .source-link a {
+      color: var(--han-pink);
+    }
+
+    /* ── SCORECARD ── */
+    .scorecard-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.875rem;
+      background: white;
+      border-radius: 6px;
+      overflow: hidden;
+      border: 1px solid var(--han-mercury);
+      margin-bottom: 1.25rem;
+    }
+
+    .scorecard-table th {
+      background: var(--han-black);
+      color: white;
+      font-family: var(--font-heading);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.6rem 0.85rem;
+      text-align: left;
+    }
+
+    .scorecard-table td {
+      padding: 0.65rem 0.85rem;
+      border-bottom: 1px solid var(--han-mercury);
+      vertical-align: top;
+    }
+
+    .scorecard-table tr:last-child td { border-bottom: none; }
+    .scorecard-table tr:nth-child(even) td { background: var(--han-alabaster); }
+
+    .scorecard-table textarea {
+      display: block;
+      width: 100%;
+      box-sizing: border-box;
+      background: var(--han-alabaster);
+      border: 1px solid var(--han-mercury);
+      border-radius: 4px;
+      padding: 0.5rem;
+      min-height: 32px;
+      font-size: 0.82rem;
+      font-family: var(--font-body);
+      color: var(--han-black);
+      resize: vertical;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+
+    .scorecard-table textarea::placeholder { color: var(--han-gray); }
+    .scorecard-table textarea:focus { border-color: var(--han-pink); }
+
+    /* ── RATING CARDS ── */
+    .rating-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .rating-card {
+      background: white;
+      border: 1px solid var(--han-mercury);
+      border-radius: 8px;
+      padding: 1rem;
+      border-top: 4px solid var(--han-mercury);
+    }
+
+    .rating-card.good { border-top-color: var(--han-green); }
+    .rating-card.medium { border-top-color: var(--han-orange); }
+    .rating-card.low { border-top-color: var(--han-pink); }
+
+    .rating-card strong {
+      display: block;
+      font-family: var(--font-heading);
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.3rem;
+    }
+
+    .rating-card p {
+      font-size: 0.82rem;
+      color: #444;
+      margin: 0;
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--han-mercury);
+      margin: 2.5rem 0;
+    }
+
+    /* ── FOOTER ── */
+    .footer {
+      background: var(--han-black);
+      color: var(--han-gray);
+      padding: 1.5rem 2rem;
+      font-size: 0.8rem;
+      text-align: center;
+    }
+
+    .footer strong { color: white; }
+    .footer a { color: var(--han-pink); text-decoration: none; }
+    .footer a:hover { text-decoration: underline; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .sidebar { display: none; }
+      .main { padding: 1.5rem 1rem 3rem; }
+      .hero { padding: 1.75rem 1rem; margin: -1.5rem -1rem 1.5rem; }
+      .hero h1 { font-size: 1.6rem; }
+      .rating-cards { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<header class="topbar">
+  <a class="topbar-brand" href="#">
+    <span class="han-mark">HAN</span>
+    <span class="topbar-title">GEO Quickscan</span>
+  </a>
+  <span class="topbar-meta">Minor Digital Marketing &middot; Maart 2026</span>
+</header>
+
+<div class="layout">
+
+  <!-- SIDEBAR NAV -->
+  <nav class="sidebar">
+    <div class="nav-section">
+      <div class="sidebar-label">Quickscan</div>
+      <a href="#intro" class="nav-link">Introductie</a>
+    </div>
+    <div class="nav-section">
+      <div class="sidebar-label">7 Checks</div>
+      <a href="#check1" class="nav-link">
+        <span class="check-number">1</span>
+        Genoemd in AI?
+      </a>
+      <a href="#check2" class="nav-link">
+        <span class="check-number">2</span>
+        Crawlers geblokkeerd?
+      </a>
+      <a href="#check3" class="nav-link">
+        <span class="check-number">3</span>
+        Koppen zijn vragen?
+      </a>
+      <a href="#check4" class="nav-link">
+        <span class="check-number">4</span>
+        Eerste zin = antwoord?
+      </a>
+      <a href="#check5" class="nav-link">
+        <span class="check-number">5</span>
+        Alt-tekst aanwezig?
+      </a>
+      <a href="#check6" class="nav-link">
+        <span class="check-number">6</span>
+        FAQ-pagina?
+      </a>
+      <a href="#check7" class="nav-link">
+        <span class="check-number">7</span>
+        Structured data?
+      </a>
+    </div>
+    <div class="nav-section">
+      <div class="sidebar-label">Resultaat</div>
+      <a href="#scorecard" class="nav-link">
+        <span class="check-number score">S</span>
+        Scorekaart
+      </a>
+    </div>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <main class="main">
+
+    <!-- HERO -->
+    <div class="hero">
+      <span class="hero-tag">Minor Digital Marketing</span>
+      <h1>GEO Quickscan</h1>
+      <p class="hero-sub">7 checks in 15 minuten</p>
+      <div class="hero-meta">
+        <span class="hero-meta-item">Minor Digital Marketing | <strong>Maart 2026</strong></span>
+      </div>
+    </div>
+
+    <!-- INTRO -->
+    <section class="section" id="intro">
+      <p>Een snelle scan om te bepalen hoe goed de website van je opdrachtgever is voorbereid op AI search.</p>
+      <div class="callout">
+        Elk punt is ja of nee. Noteer je antwoorden en gebruik ze als basis voor je advies.
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <!-- CHECK 1 -->
+    <section class="section" id="check1">
+      <div class="section-header">
+        <div class="check-badge">1</div>
+        <div class="section-header-text">
+          <h2>Word je genoemd in AI?</h2>
+          <p class="section-sub">Nulmeting: hoe zichtbaar is je opdrachtgever in AI-antwoorden?</p>
+        </div>
+      </div>
+
+      <h3>Wat doe je</h3>
+      <ul>
+        <li>Open <a href="https://chat.openai.com" target="_blank" rel="noopener">ChatGPT</a>, <a href="https://www.perplexity.ai" target="_blank" rel="noopener">Perplexity</a> of Google</li>
+        <li>Stel 3 vragen die een potentiele klant zou stellen over het product of de dienst van je opdrachtgever</li>
+        <li>Noteer per vraag:</li>
+      </ul>
+
+      <table class="interactive-table">
+        <thead>
+          <tr>
+            <th>Vraag</th>
+            <th>ChatGPT</th>
+            <th>Perplexity</th>
+            <th>Google AI</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><textarea placeholder="Vraag 1..."></textarea></td>
+            <td><textarea placeholder="Genoemd? Ja/Nee"></textarea></td>
+            <td><textarea placeholder="Genoemd? Ja/Nee"></textarea></td>
+            <td><textarea placeholder="Genoemd? Ja/Nee"></textarea></td>
+          </tr>
+          <tr>
+            <td><textarea placeholder="Vraag 2..."></textarea></td>
+            <td><textarea placeholder="Genoemd? Ja/Nee"></textarea></td>
+            <td><textarea placeholder="Genoemd? Ja/Nee"></textarea></td>
+            <td><textarea placeholder="Genoemd? Ja/Nee"></textarea></td>
+          </tr>
+          <tr>
+            <td><textarea placeholder="Vraag 3..."></textarea></td>
+            <td><textarea placeholder="Genoemd? Ja/Nee"></textarea></td>
+            <td><textarea placeholder="Genoemd? Ja/Nee"></textarea></td>
+            <td><textarea placeholder="Genoemd? Ja/Nee"></textarea></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Let ook op</h3>
+      <ul>
+        <li>Welke concurrenten worden wel genoemd?</li>
+        <li>Wat maakt hun content beter?</li>
+        <li>Wat is het sentiment? Zegt AI iets positiefs of neutraals?</li>
+      </ul>
+
+      <div class="callout">
+        <strong>Waarom:</strong> Dit is je nulmeting. Herhaal dit elke maand om te zien of je verbeteringen werken.
+      </div>
+
+      <p class="source-link"><strong>Bron:</strong> <a href="https://www.aleydasolis.com/en/ai-search/ai-search-optimization-checklist/" target="_blank" rel="noopener">Aleyda Solis: Checklist stap 1</a></p>
+    </section>
+
+    <hr class="divider">
+
+    <!-- CHECK 2 -->
+    <section class="section" id="check2">
+      <div class="section-header">
+        <div class="check-badge">2</div>
+        <div class="section-header-text">
+          <h2>Worden AI-crawlers geblokkeerd?</h2>
+          <p class="section-sub">Check de robots.txt op AI-blokkades</p>
+        </div>
+      </div>
+
+      <h3>Wat doe je</h3>
+      <ul>
+        <li>Ga naar <code>[website van je opdrachtgever]/robots.txt</code>
+          <br>Bijvoorbeeld: <code>mantel.com/robots.txt</code> of <code>snowcountry.nl/robots.txt</code></li>
+        <li>Zoek naar deze regels:</li>
+      </ul>
+
+      <div class="code-block">User-agent: GPTBot
+Disallow: /
+
+User-agent: ClaudeBot
+Disallow: /
+
+User-agent: PerplexityBot
+Disallow: /</div>
+
+      <p>Als je deze regels vindt: AI-crawlers worden geblokkeerd.</p>
+
+      <h3>Resultaat</h3>
+
+      <table class="interactive-table">
+        <thead>
+          <tr>
+            <th>Crawler</th>
+            <th>Geblokkeerd?</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>GPTBot (ChatGPT)</td>
+            <td><textarea placeholder="Ja/Nee"></textarea></td>
+          </tr>
+          <tr>
+            <td>ClaudeBot (Claude)</td>
+            <td><textarea placeholder="Ja/Nee"></textarea></td>
+          </tr>
+          <tr>
+            <td>PerplexityBot (Perplexity)</td>
+            <td><textarea placeholder="Ja/Nee"></textarea></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="callout">
+        <strong>Waarom:</strong> Als AI-crawlers geblokkeerd worden, kan AI je content niet vinden. Dan besta je niet in AI-antwoorden.
+      </div>
+
+      <div class="callout pink">
+        <strong>Actie als geblokkeerd:</strong> Meld dit aan de opdrachtgever/developer. De robots.txt moet worden aangepast.
+      </div>
+
+      <p class="source-link"><strong>Bron:</strong> <a href="https://vercel.com/blog/the-rise-of-the-ai-crawler" target="_blank" rel="noopener">Vercel: The Rise of the AI Crawler</a></p>
+    </section>
+
+    <hr class="divider">
+
+    <!-- CHECK 3 -->
+    <section class="section" id="check3">
+      <div class="section-header">
+        <div class="check-badge">3</div>
+        <div class="section-header-text">
+          <h2>Zijn de koppen vragen?</h2>
+          <p class="section-sub">AI matcht op vragen, niet op labels</p>
+        </div>
+      </div>
+
+      <h3>Wat doe je</h3>
+      <ul>
+        <li>Open een belangrijke pagina van je opdrachtgever (bijv. een productcategorie of dienstenpagina)</li>
+        <li>Lees alle H2 en H3 koppen op de pagina</li>
+        <li>Noteer:</li>
+      </ul>
+
+      <table class="interactive-table">
+        <thead>
+          <tr>
+            <th>Kop</th>
+            <th>Vraag?</th>
+            <th>Verbetering</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><textarea placeholder='Bijv. "Onze producten"'></textarea></td>
+            <td><textarea placeholder='Nee'></textarea></td>
+            <td><textarea placeholder='"Welke fiets past bij mij?"'></textarea></td>
+          </tr>
+          <tr>
+            <td><textarea placeholder='Bijv. "Over ons"'></textarea></td>
+            <td><textarea placeholder='Nee'></textarea></td>
+            <td><textarea placeholder='"Wie zijn wij en wat doen we?"'></textarea></td>
+          </tr>
+          <tr>
+            <td><textarea placeholder='Bijv. "Welke maat heb ik nodig?"'></textarea></td>
+            <td><textarea placeholder='Ja'></textarea></td>
+            <td><textarea placeholder='Prima zo'></textarea></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="callout">
+        <strong>Waarom:</strong> AI breekt vragen op in subvragen (query fan-out). Als jouw koppen al vragen zijn, match je direct met die subvragen. Koppen als "Onze producten" of "Diensten" zeggen AI niks.
+      </div>
+
+      <div class="callout pink">
+        <strong>Actie:</strong> Herschrijf de koppen als vragen die je doelgroep stelt. Dit is een uurtje werk met grote impact.
+      </div>
+
+      <p class="source-link"><strong>Bron:</strong> <a href="https://www.aleydasolis.com/en/ai-search/ai-search-optimization-checklist/" target="_blank" rel="noopener">Aleyda Solis: Checklist stap 5</a></p>
+    </section>
+
+    <hr class="divider">
+
+    <!-- CHECK 4 -->
+    <section class="section" id="check4">
+      <div class="section-header">
+        <div class="check-badge">4</div>
+        <div class="section-header-text">
+          <h2>Geeft de eerste zin het antwoord?</h2>
+          <p class="section-sub">De omgekeerde piramide: begin met het belangrijkste</p>
+        </div>
+      </div>
+
+      <h3>Wat doe je</h3>
+      <ul>
+        <li>Lees op dezelfde pagina de eerste zin van 3 verschillende secties</li>
+        <li>Geeft die zin direct antwoord op de vraag in de heading?</li>
+        <li>Noteer:</li>
+      </ul>
+
+      <table class="interactive-table">
+        <thead>
+          <tr>
+            <th>Sectie</th>
+            <th>Eerste zin geeft antwoord?</th>
+            <th>Voorbeeld</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Sectie 1</td>
+            <td><textarea placeholder="Ja/Nee"></textarea></td>
+            <td><textarea placeholder="Noteer de eerste zin..."></textarea></td>
+          </tr>
+          <tr>
+            <td>Sectie 2</td>
+            <td><textarea placeholder="Ja/Nee"></textarea></td>
+            <td><textarea placeholder="Noteer de eerste zin..."></textarea></td>
+          </tr>
+          <tr>
+            <td>Sectie 3</td>
+            <td><textarea placeholder="Ja/Nee"></textarea></td>
+            <td><textarea placeholder="Noteer de eerste zin..."></textarea></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Voorbeeld niet goed</h3>
+      <blockquote>Bij ons kun je terecht voor alles op het gebied van fietsen. Wij staan al meer dan 20 jaar voor kwaliteit en service.</blockquote>
+
+      <h3>Voorbeeld wel goed</h3>
+      <blockquote>Een racefiets is geschikt voor wegwielrennen en kost gemiddeld tussen de 800 en 5.000 euro. De prijs hangt af van het framemateriaal (aluminium of carbon) en de groepset.</blockquote>
+
+      <div class="callout">
+        <strong>Waarom:</strong> AI scant de eerste zinnen van secties voor potentiele citaties. Als je antwoord pas in de derde alinea staat, pakt AI het niet.
+      </div>
+
+      <div class="callout pink">
+        <strong>Actie:</strong> Herschrijf eerste zinnen zodat ze direct het kernantwoord geven. De omgekeerde piramide: begin met het belangrijkste.
+      </div>
+
+      <p class="source-link"><strong>Bron:</strong> <a href="https://www.aleydasolis.com/en/ai-search/ai-search-optimization-checklist/" target="_blank" rel="noopener">Aleyda Solis: Checklist stap 5</a></p>
+    </section>
+
+    <hr class="divider">
+
+    <!-- CHECK 5 -->
+    <section class="section" id="check5">
+      <div class="section-header">
+        <div class="check-badge">5</div>
+        <div class="section-header-text">
+          <h2>Hebben afbeeldingen alt-tekst?</h2>
+          <p class="section-sub">AI kan geen afbeeldingen "zien"</p>
+        </div>
+      </div>
+
+      <h3>Wat doe je</h3>
+      <ul>
+        <li>Ga naar een pagina met afbeeldingen</li>
+        <li>Klik rechts op een afbeelding &gt; "Inspecteren" (of "Element inspecteren")</li>
+        <li>Zoek het <code>alt</code> attribuut in de code</li>
+        <li>Noteer:</li>
+      </ul>
+
+      <table class="interactive-table">
+        <thead>
+          <tr>
+            <th>Afbeelding</th>
+            <th>Alt-tekst aanwezig?</th>
+            <th>Inhoud alt-tekst</th>
+            <th>Goed genoeg?</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Afbeelding 1</td>
+            <td><textarea placeholder="Ja/Nee"></textarea></td>
+            <td><textarea placeholder='bijv. "DSC_0394"'></textarea></td>
+            <td><textarea placeholder="Ja/Nee"></textarea></td>
+          </tr>
+          <tr>
+            <td>Afbeelding 2</td>
+            <td><textarea placeholder="Ja/Nee"></textarea></td>
+            <td><textarea placeholder='bijv. "racefiets Canyon Endurace"'></textarea></td>
+            <td><textarea placeholder="Ja/Nee"></textarea></td>
+          </tr>
+          <tr>
+            <td>Afbeelding 3</td>
+            <td><textarea placeholder="Ja/Nee"></textarea></td>
+            <td><textarea placeholder='bijv. "" (leeg)'></textarea></td>
+            <td><textarea placeholder="Ja/Nee"></textarea></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Check ook</h3>
+      <ul>
+        <li>Staat er een bijschrift (caption) onder de afbeelding?</li>
+        <li>Zijn er tabellen die als screenshot/afbeelding zijn geplaatst? Die kan AI niet lezen.</li>
+      </ul>
+
+      <div class="callout">
+        <strong>Waarom:</strong> AI kan geen afbeeldingen "zien". Het leest de alt-tekst en het bijschrift. "foto1.jpg" of "DSC_0394" vertelt AI niks. "Studenten werkgroep verpleegkunde HAN Nijmegen" vertelt AI alles.
+      </div>
+
+      <div class="callout pink">
+        <strong>Actie:</strong> Herschrijf alt-teksten zodat ze beschrijven wat je ziet. Voeg bijschriften toe. Vervang tabel-screenshots door HTML tabellen.
+      </div>
+
+      <p class="source-link"><strong>Bron:</strong> <a href="https://www.aleydasolis.com/en/ai-search/ai-search-optimization-checklist/" target="_blank" rel="noopener">Aleyda Solis: Checklist stap 8</a></p>
+    </section>
+
+    <hr class="divider">
+
+    <!-- CHECK 6 -->
+    <section class="section" id="check6">
+      <div class="section-header">
+        <div class="check-badge">6</div>
+        <div class="section-header-text">
+          <h2>Is er een FAQ-pagina?</h2>
+          <p class="section-sub">FAQ's zijn goud voor GEO</p>
+        </div>
+      </div>
+
+      <h3>Wat doe je</h3>
+      <ul>
+        <li>Zoek op de website van je opdrachtgever naar een FAQ, veelgestelde vragen, of klantenservice-pagina</li>
+        <li>Noteer:</li>
+      </ul>
+
+      <table class="interactive-table">
+        <thead>
+          <tr>
+            <th>Vraag</th>
+            <th>Antwoord</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Is er een FAQ-pagina?</td>
+            <td><textarea placeholder="Ja/Nee"></textarea></td>
+          </tr>
+          <tr>
+            <td>Hoeveel vragen staan erop?</td>
+            <td><textarea placeholder="Aantal..."></textarea></td>
+          </tr>
+          <tr>
+            <td>Geeft de eerste zin van elk antwoord direct het antwoord?</td>
+            <td><textarea placeholder="Ja/Nee"></textarea></td>
+          </tr>
+          <tr>
+            <td>Zijn de antwoorden 40-60 woorden?</td>
+            <td><textarea placeholder="Ja/Nee"></textarea></td>
+          </tr>
+          <tr>
+            <td>Is het feitelijk of marketing-taal?</td>
+            <td><textarea placeholder="Feitelijk / Marketing"></textarea></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="callout">
+        <strong>Waarom:</strong> FAQ's zijn goud voor GEO. Ze matchen direct met de vragen die mensen stellen in AI-tools. Als de FAQ's ook FAQPage schema markup hebben, weet AI dat het vraag-antwoord content is.
+      </div>
+
+      <div class="callout pink">
+        <strong>Actie als er geen FAQ is:</strong> Schrijf er een met de top 10 vragen uit stap 1. Eerste zin = antwoord, 40-60 woorden, feitelijk.
+      </div>
+
+      <div class="callout pink">
+        <strong>Actie als er wel een FAQ is:</strong> Check of het FAQPage schema heeft (zie check 7). Check of de antwoorden citeerbaar zijn (feitelijk, specifiek, 40-60 woorden).
+      </div>
+
+      <p class="source-link"><strong>Bron:</strong> <a href="https://www.aleydasolis.com/en/ai-search/ai-search-optimization-checklist/" target="_blank" rel="noopener">Aleyda Solis: Checklist stap 5</a></p>
+    </section>
+
+    <hr class="divider">
+
+    <!-- CHECK 7 -->
+    <section class="section" id="check7">
+      <div class="section-header">
+        <div class="check-badge">7</div>
+        <div class="section-header-text">
+          <h2>Welke structured data is er?</h2>
+          <p class="section-sub">Schema markup vertelt AI precies wat er op je pagina staat</p>
+        </div>
+      </div>
+
+      <h3>Wat doe je</h3>
+      <ul>
+        <li>Ga naar <a href="https://search.google.com/test/rich-results" target="_blank" rel="noopener">Google Rich Results Test</a></li>
+        <li>Vul de URL van een belangrijke pagina van je opdrachtgever in</li>
+        <li>Klik op "URL testen"</li>
+        <li>Noteer welke schema types worden herkend:</li>
+      </ul>
+
+      <table class="interactive-table">
+        <thead>
+          <tr>
+            <th>Schema type</th>
+            <th>Aanwezig?</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>FAQPage</td>
+            <td><textarea placeholder="Ja/Nee"></textarea></td>
+          </tr>
+          <tr>
+            <td>Product</td>
+            <td><textarea placeholder="Ja/Nee"></textarea></td>
+          </tr>
+          <tr>
+            <td>LocalBusiness</td>
+            <td><textarea placeholder="Ja/Nee"></textarea></td>
+          </tr>
+          <tr>
+            <td>Organization</td>
+            <td><textarea placeholder="Ja/Nee"></textarea></td>
+          </tr>
+          <tr>
+            <td>BreadcrumbList</td>
+            <td><textarea placeholder="Ja/Nee"></textarea></td>
+          </tr>
+          <tr>
+            <td>AggregateRating</td>
+            <td><textarea placeholder="Ja/Nee"></textarea></td>
+          </tr>
+          <tr>
+            <td>HowTo</td>
+            <td><textarea placeholder="Ja/Nee"></textarea></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="callout">
+        <strong>Waarom:</strong> Schema markup vertelt AI precies wat er op je pagina staat. Google's John Mueller: "Zorg voor goede structured data, dat is een van de beste manieren om in AI experiences te verschijnen." Een FAQ zonder FAQPage schema is een gemiste kans.
+      </div>
+
+      <div class="callout pink">
+        <strong>Actie:</strong> Noteer wat er mist en adviseer de opdrachtgever om het te laten toevoegen door een developer. Voor WordPress: plugins zoals Yoast SEO of Rank Math. Voor Shopify: vergelijkbare apps.
+      </div>
+
+      <p><strong>Tool:</strong> <a href="https://search.google.com/test/rich-results" target="_blank" rel="noopener">Google Rich Results Test</a> (gratis)</p>
+
+      <p class="source-link"><strong>Bron:</strong> <a href="https://developers.google.com/search/blog/2025/05/succeeding-in-ai-search" target="_blank" rel="noopener">Google: Succeeding in AI Search</a></p>
+    </section>
+
+    <hr class="divider">
+
+    <!-- SCORECARD -->
+    <section class="section" id="scorecard">
+      <div class="section-header">
+        <div class="check-badge score">S</div>
+        <div class="section-header-text">
+          <h2>Scorekaart</h2>
+          <p class="section-sub">Vul je resultaten in</p>
+        </div>
+      </div>
+
+      <table class="scorecard-table">
+        <thead>
+          <tr>
+            <th>Check</th>
+            <th>Resultaat</th>
+            <th>Prioriteit</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>1. Genoemd in AI?</strong></td>
+            <td><textarea placeholder=".../3 vragen"></textarea></td>
+            <td><textarea placeholder="Hoog / Midden / Laag"></textarea></td>
+          </tr>
+          <tr>
+            <td><strong>2. AI-crawlers geblokkeerd?</strong></td>
+            <td><textarea placeholder="Ja/Nee"></textarea></td>
+            <td><textarea placeholder="Hoog als ja"></textarea></td>
+          </tr>
+          <tr>
+            <td><strong>3. Koppen zijn vragen?</strong></td>
+            <td><textarea placeholder=".../... koppen"></textarea></td>
+            <td><textarea placeholder="Hoog / Midden / Laag"></textarea></td>
+          </tr>
+          <tr>
+            <td><strong>4. Eerste zin = antwoord?</strong></td>
+            <td><textarea placeholder=".../3 secties"></textarea></td>
+            <td><textarea placeholder="Hoog / Midden / Laag"></textarea></td>
+          </tr>
+          <tr>
+            <td><strong>5. Alt-tekst aanwezig?</strong></td>
+            <td><textarea placeholder=".../... afbeeldingen"></textarea></td>
+            <td><textarea placeholder="Hoog / Midden / Laag"></textarea></td>
+          </tr>
+          <tr>
+            <td><strong>6. FAQ-pagina aanwezig?</strong></td>
+            <td><textarea placeholder="Ja/Nee"></textarea></td>
+            <td><textarea placeholder="Hoog / Midden / Laag"></textarea></td>
+          </tr>
+          <tr>
+            <td><strong>7. Structured data aanwezig?</strong></td>
+            <td><textarea placeholder="... schema types"></textarea></td>
+            <td><textarea placeholder="Hoog / Midden / Laag"></textarea></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Beoordeling</h3>
+
+      <div class="rating-cards">
+        <div class="rating-card good">
+          <strong>6-7 checks goed</strong>
+          <p>Je opdrachtgever heeft een sterke basis voor GEO.</p>
+        </div>
+        <div class="rating-card medium">
+          <strong>3-5 checks goed</strong>
+          <p>Er zijn duidelijke quick wins.</p>
+        </div>
+        <div class="rating-card low">
+          <strong>0-2 checks goed</strong>
+          <p>Er is veel ruimte voor verbetering. Begin met de checks die "Nee" scoren.</p>
+        </div>
+      </div>
+
+      <div class="callout green">
+        <strong>Volgende stap:</strong> Gebruik de <a href="geo-checklist.html">GEO Checklist</a> om de verbeterpunten systematisch aan te pakken.
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<footer class="footer">
+  <strong>GEO Quickscan</strong> &middot; Minor Digital Marketing &middot; HAN University of Applied Sciences &middot; Maart 2026
+  <br><a href="geo-checklist.html">GEO Checklist &rarr;</a>
+</footer>
+
+<script>
+  // Active nav on scroll
+  const sections = document.querySelectorAll('.section[id]');
+  const navLinks = document.querySelectorAll('.nav-link[href^="#"]');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(l => l.classList.remove('active'));
+        const match = document.querySelector(`.nav-link[href="#${entry.target.id}"]`);
+        if (match) match.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+
+  sections.forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>

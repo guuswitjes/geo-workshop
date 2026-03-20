@@ -1,0 +1,1425 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GEO Checklist — Optimaliseren voor AI Search</title>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-R7P0KW4EHC"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-R7P0KW4EHC');
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Roboto+Condensed:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --han-pink: #e50056;
+      --han-black: #000000;
+      --han-orange: #f5a846;
+      --han-green: #7ac48e;
+      --han-blue: #6ac3ed;
+      --han-alabaster: #f8f8f8;
+      --han-mercury: #e3e3e3;
+      --han-gray: #919191;
+      --font-heading: "Roboto Condensed", "Arial Narrow", sans-serif;
+      --font-body: "Roboto", "Segoe UI", Arial, sans-serif;
+      --sidebar-width: 260px;
+      --content-max: 780px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--han-alabaster);
+      color: var(--han-black);
+      line-height: 1.6;
+    }
+
+    /* ── TOP BAR ── */
+    .topbar {
+      background: var(--han-black);
+      color: white;
+      padding: 0 2rem;
+      height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .topbar-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: white;
+    }
+
+    .han-mark {
+      background: var(--han-pink);
+      color: white;
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 1rem;
+      letter-spacing: 0.05em;
+      padding: 3px 8px;
+      text-transform: uppercase;
+    }
+
+    .topbar-title {
+      font-family: var(--font-heading);
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      color: var(--han-mercury);
+    }
+
+    .topbar-meta {
+      font-size: 0.8rem;
+      color: var(--han-gray);
+    }
+
+    /* ── LAYOUT ── */
+    .layout {
+      display: flex;
+      min-height: calc(100vh - 52px);
+    }
+
+    /* ── SIDEBAR ── */
+    .sidebar {
+      width: var(--sidebar-width);
+      background: white;
+      border-right: 1px solid var(--han-mercury);
+      position: sticky;
+      top: 52px;
+      height: calc(100vh - 52px);
+      overflow-y: auto;
+      flex-shrink: 0;
+      padding: 1.5rem 0;
+    }
+
+    .sidebar-label {
+      font-family: var(--font-heading);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--han-gray);
+      padding: 0 1.25rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .nav-section {
+      margin-bottom: 1.5rem;
+    }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0.45rem 1.25rem;
+      text-decoration: none;
+      color: var(--han-black);
+      font-size: 0.875rem;
+      transition: background 0.15s;
+      border-left: 3px solid transparent;
+    }
+
+    .nav-link:hover {
+      background: var(--han-alabaster);
+      border-left-color: var(--han-mercury);
+    }
+
+    .nav-link.active {
+      border-left-color: var(--han-pink);
+      color: var(--han-pink);
+      font-weight: 500;
+    }
+
+    .nav-link .step-num {
+      width: 22px;
+      height: 22px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-heading);
+      font-size: 0.75rem;
+      font-weight: 700;
+      flex-shrink: 0;
+      background: var(--han-pink);
+      color: white;
+    }
+
+    .nav-link .step-num.gray {
+      background: var(--han-gray);
+    }
+
+    .nav-link .step-num.orange {
+      background: var(--han-orange);
+      color: var(--han-black);
+    }
+
+    /* ── MAIN ── */
+    .main {
+      flex: 1;
+      padding: 2.5rem 2rem 4rem;
+      max-width: calc(var(--content-max) + 4rem);
+    }
+
+    /* ── HERO ── */
+    .hero {
+      background: var(--han-black);
+      color: white;
+      padding: 2.5rem 2rem;
+      margin: -2.5rem -2rem 2.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      right: -60px;
+      top: -60px;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      background: rgba(229,0,86,0.12);
+      pointer-events: none;
+    }
+
+    .hero-tag {
+      background: var(--han-pink);
+      color: white;
+      font-family: var(--font-heading);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      display: inline-block;
+      margin-bottom: 0.75rem;
+    }
+
+    .hero h1 {
+      font-family: var(--font-heading);
+      font-size: 2.2rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      line-height: 1.1;
+      margin-bottom: 0.5rem;
+    }
+
+    .hero-sub {
+      font-size: 1rem;
+      color: #ccc;
+      margin-bottom: 1.25rem;
+    }
+
+    .hero-meta {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .hero-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.85rem;
+      color: var(--han-mercury);
+    }
+
+    .hero-meta-item strong { color: var(--han-orange); }
+
+    /* ── SECTION ── */
+    .section {
+      margin-bottom: 3rem;
+      scroll-margin-top: 70px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .draft-badge {
+      width: 52px;
+      height: 52px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-heading);
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: white;
+      flex-shrink: 0;
+      background: var(--han-pink);
+    }
+
+    .section-header-text h2 {
+      font-family: var(--font-heading);
+      font-size: 1.5rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      color: var(--han-black);
+      line-height: 1.1;
+    }
+
+    .section-header-text .section-sub {
+      font-size: 0.9rem;
+      color: var(--han-gray);
+      margin-top: 2px;
+    }
+
+    /* ── CONTENT ELEMENTS ── */
+    h3 {
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--han-black);
+      margin: 1.75rem 0 0.75rem;
+    }
+
+    p { margin-bottom: 0.75rem; font-size: 0.925rem; }
+
+    ul, ol {
+      padding-left: 1.25rem;
+      margin-bottom: 0.75rem;
+      font-size: 0.925rem;
+    }
+
+    li { margin-bottom: 0.3rem; }
+
+    strong { font-weight: 700; }
+
+    a { color: var(--han-pink); }
+    a:hover { text-decoration: underline; }
+
+    .intro-text {
+      font-size: 0.95rem;
+      color: #333;
+      margin-bottom: 1.25rem;
+      padding: 1rem 1.25rem;
+      background: white;
+      border-left: 3px solid var(--han-mercury);
+      border-radius: 0 6px 6px 0;
+    }
+
+    /* ── CALLOUT ── */
+    .callout {
+      background: white;
+      border-left: 4px solid var(--han-orange);
+      border-radius: 0 6px 6px 0;
+      padding: 0.85rem 1rem;
+      font-size: 0.875rem;
+      margin-bottom: 1rem;
+    }
+
+    .callout.tip {
+      border-left-color: var(--han-blue);
+    }
+
+    .callout.pink {
+      border-left-color: var(--han-pink);
+    }
+
+    /* ── BLOCKQUOTE ── */
+    blockquote {
+      background: var(--han-alabaster);
+      border-left: 3px solid var(--han-mercury);
+      padding: 0.75rem 1rem;
+      margin: 0.75rem 0;
+      font-size: 0.9rem;
+      color: #444;
+      border-radius: 0 4px 4px 0;
+    }
+
+    blockquote.good {
+      border-left-color: var(--han-green);
+      background: #f0faf3;
+    }
+
+    blockquote.bad {
+      border-left-color: var(--han-pink);
+      background: #fff5f8;
+    }
+
+    /* ── CODE BLOCKS ── */
+    .code-block {
+      background: #1a1a1a;
+      color: #e8e8e8;
+      border-radius: 6px;
+      padding: 1rem;
+      font-family: "Consolas", "Monaco", monospace;
+      font-size: 0.78rem;
+      line-height: 1.55;
+      white-space: pre-wrap;
+      word-break: break-word;
+      margin-bottom: 0.75rem;
+      overflow-x: auto;
+    }
+
+    /* ── TABLES ── */
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.875rem;
+      background: white;
+      border-radius: 6px;
+      overflow: hidden;
+      border: 1px solid var(--han-mercury);
+      margin-bottom: 1rem;
+    }
+
+    .data-table th {
+      background: var(--han-black);
+      color: white;
+      font-family: var(--font-heading);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.6rem 0.85rem;
+      text-align: left;
+    }
+
+    .data-table td {
+      padding: 0.65rem 0.85rem;
+      border-bottom: 1px solid var(--han-mercury);
+      vertical-align: top;
+    }
+
+    .data-table tr:last-child td { border-bottom: none; }
+    .data-table tr:nth-child(even) td { background: var(--han-alabaster); }
+
+    .badge-ja {
+      display: inline-block;
+      background: var(--han-green);
+      color: white;
+      font-family: var(--font-heading);
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 3px;
+      text-transform: uppercase;
+    }
+
+    .badge-nee {
+      display: inline-block;
+      background: var(--han-pink);
+      color: white;
+      font-family: var(--font-heading);
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 3px;
+      text-transform: uppercase;
+    }
+
+    /* ── SOURCE LIST ── */
+    .source-list {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .source-list li {
+      padding: 0.4rem 0;
+      border-bottom: 1px solid var(--han-mercury);
+      font-size: 0.875rem;
+    }
+
+    .source-list li:last-child { border-bottom: none; }
+
+    /* ── DIVIDER ── */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--han-mercury);
+      margin: 2.5rem 0;
+    }
+
+    /* ── FOOTER ── */
+    .footer {
+      background: var(--han-black);
+      color: var(--han-gray);
+      padding: 1.5rem 2rem;
+      font-size: 0.8rem;
+      text-align: center;
+    }
+
+    .footer strong { color: white; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .sidebar { display: none; }
+      .main { padding: 1.5rem 1rem 3rem; }
+      .hero { padding: 1.75rem 1rem; margin: -1.5rem -1rem 1.5rem; }
+      .hero h1 { font-size: 1.6rem; }
+      .data-table { font-size: 0.8rem; }
+      .data-table th, .data-table td { padding: 0.5rem 0.6rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<header class="topbar">
+  <a class="topbar-brand" href="#">
+    <span class="han-mark">HAN</span>
+    <span class="topbar-title">GEO Checklist</span>
+  </a>
+  <span class="topbar-meta">Minor Digital Marketing &middot; Maart 2026</span>
+</header>
+
+<div class="layout">
+
+  <!-- SIDEBAR NAV -->
+  <nav class="sidebar">
+    <div class="nav-section">
+      <div class="sidebar-label">Inhoudsopgave</div>
+      <a href="#intro" class="nav-link">Hoe gebruik je deze checklist?</a>
+      <a href="#context" class="nav-link">De context: hoe AI search werkt</a>
+    </div>
+    <div class="nav-section">
+      <div class="sidebar-label">De 10 stappen</div>
+      <a href="#stap1" class="nav-link"><span class="step-num">1</span> AI-zoekgedrag onderzoeken</a>
+      <a href="#stap2" class="nav-link"><span class="step-num">2</span> Crawlbaarheid AI-bots</a>
+      <a href="#stap3" class="nav-link"><span class="step-num">3</span> Thematische breedte</a>
+      <a href="#stap4" class="nav-link"><span class="step-num">4</span> Chunk-level schrijven</a>
+      <a href="#stap5" class="nav-link"><span class="step-num">5</span> Antwoordsynthese</a>
+      <a href="#stap6" class="nav-link"><span class="step-num">6</span> Citatiewaardigheid</a>
+      <a href="#stap7" class="nav-link"><span class="step-num">7</span> Autoriteitssignalen</a>
+      <a href="#stap8" class="nav-link"><span class="step-num">8</span> Multimodale ondersteuning</a>
+      <a href="#stap9" class="nav-link"><span class="step-num">9</span> Personalisatie-veerkracht</a>
+      <a href="#stap10" class="nav-link"><span class="step-num">10</span> Meten</a>
+    </div>
+    <div class="nav-section">
+      <div class="sidebar-label">Aanvullend</div>
+      <a href="#schema" class="nav-link"><span class="step-num orange">+</span> Structured Data</a>
+      <a href="#samenvatting" class="nav-link"><span class="step-num gray">S</span> Samenvatting</a>
+      <a href="#bronnen" class="nav-link"><span class="step-num gray">B</span> Bronnen</a>
+    </div>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <main class="main">
+
+    <!-- HERO -->
+    <div class="hero">
+      <span class="hero-tag">Minor Digital Marketing</span>
+      <h1>GEO Checklist</h1>
+      <p class="hero-sub">Optimaliseren voor AI search</p>
+      <div class="hero-meta">
+        <span class="hero-meta-item"><strong>Minor Digital Marketing</strong></span>
+        <span class="hero-meta-item"><strong>10 stappen</strong></span>
+        <span class="hero-meta-item"><strong>Maart 2026</strong></span>
+      </div>
+    </div>
+
+    <!-- INTRO -->
+    <section class="section" id="intro">
+      <p>Een complete checklist om websites te optimaliseren voor AI search (GEO). Gebaseerd op de <a href="https://www.aleydasolis.com/en/ai-search/ai-search-optimization-checklist/" target="_blank" rel="noopener">AI Search Content Optimization Checklist van Aleyda Solis</a>, aangevuld met inzichten uit 15+ vakbronnen.</p>
+
+      <h3>Hoe gebruik je deze checklist?</h3>
+      <p>Werk de stappen van boven naar beneden door. Elke stap bouwt voort op de vorige. Per stap vind je:</p>
+      <ul>
+        <li><strong>Wat het is</strong> en waarom het belangrijk is</li>
+        <li><strong>Hoe je het checkt</strong> bij je opdrachtgever</li>
+        <li><strong>Hoe je het verbetert</strong> (zelf doen of developer nodig)</li>
+        <li><strong>Voorbeelden</strong> en bronnen</li>
+      </ul>
+    </section>
+
+    <hr class="divider">
+
+    <!-- CONTEXT -->
+    <section class="section" id="context">
+      <div class="section-header">
+        <div class="draft-badge" style="background:var(--han-orange);color:var(--han-black);">?</div>
+        <div class="section-header-text">
+          <h2>De context: hoe AI search werkt</h2>
+          <p class="section-sub">Begrijp het verschil voordat je gaat optimaliseren</p>
+        </div>
+      </div>
+
+      <p><strong>Traditioneel (Google):</strong> Crawled &gt; Indexed &gt; Ranked<br>
+      Je pagina wordt gecrawld, geindexeerd, en gerankt op positie 1-10. De gebruiker klikt op een link en leest zelf.</p>
+
+      <p><strong>AI search (ChatGPT, Perplexity, Google AI Overviews):</strong> Chunked &gt; Retrieved &gt; Synthesized<br>
+      Je pagina wordt opgebroken in passages ("chunks"). AI selecteert de meest relevante passages, combineert ze tot een antwoord, en citeert de bronnen.</p>
+
+      <p style="font-size:0.82rem;color:var(--han-gray);">(<a href="https://duaneforresterdecodes.substack.com/p/chunked-retrieved-synthesized-not" target="_blank" rel="noopener">Bron: Duane Forrester</a>)</p>
+
+      <h3>Wat dit betekent</h3>
+      <ul>
+        <li>Het gaat niet om hele pagina's maar om specifieke passages</li>
+        <li>AI leest niet alles, het selecteert</li>
+        <li>Je concurreert niet om een positie maar om inclusie in het antwoord</li>
+        <li>89% van AI-citaties komt van buiten de top 100 in Google (<a href="https://searchengineland.com/google-ai-overviews-search-clicks-fell-report-455498" target="_blank" rel="noopener">BrightEdge</a>)</li>
+      </ul>
+
+      <h3>Meer lezen over hoe AI search werkt</h3>
+      <ul>
+        <li><a href="https://ipullrank.com/how-ai-mode-works" target="_blank" rel="noopener">iPullRank: How AI Mode Works (patent-analyse, 6-stappen proces)</a></li>
+        <li><a href="https://www.aleydasolis.com/en/ai-search/key-traditional-search-ai-comparison/" target="_blank" rel="noopener">Aleyda Solis: SEO vs GEO vergelijking</a></li>
+        <li><a href="https://www.aleydasolis.com/en/ai-search/google-query-fan-out/" target="_blank" rel="noopener">Aleyda Solis: Query Fan-Out uitgelegd</a></li>
+        <li><a href="https://wordlift.io/blog/en/query-fan-out-ai-search/" target="_blank" rel="noopener">WordLift: Query Fan-Out data-driven approach</a></li>
+      </ul>
+
+      <h3>Elke AI kiest andere bronnen</h3>
+      <ul>
+        <li><strong>ChatGPT:</strong> Wikipedia domineert (47,9% van citaties)</li>
+        <li><strong>Google AI Overviews:</strong> Reddit (21%) + YouTube (18,8%)</li>
+        <li><strong>Perplexity:</strong> Reddit (46,7%)</li>
+      </ul>
+      <p style="font-size:0.82rem;color:var(--han-gray);">(<a href="https://www.tryprofound.com/blog/ai-platform-citation-patterns" target="_blank" rel="noopener">Bron: Profound</a>)</p>
+    </section>
+
+    <hr class="divider">
+
+    <!-- STAP 1 -->
+    <section class="section" id="stap1">
+      <div class="section-header">
+        <div class="draft-badge">1</div>
+        <div class="section-header-text">
+          <h2>Stap 1: Onderzoek het AI-zoekgedrag van je doelgroep</h2>
+        </div>
+      </div>
+
+      <h3>Wat is het?</h3>
+      <p>Voordat je gaat optimaliseren, moet je weten welke vragen je doelgroep stelt in AI-tools. Dit is anders dan zoekwoorden in Google: mensen stellen hele vragen, gemiddeld 23 woorden in plaats van 4 (<a href="https://www.aleydasolis.com/en/search-engine-optimization/seo-vs-geo-optimizing-for-traditional-vs-ai-search/" target="_blank" rel="noopener">bron: Aleyda Solis</a>).</p>
+
+      <h3>Waarom is het belangrijk?</h3>
+      <p>Als je niet weet welke vragen je doelgroep stelt, kun je er ook geen antwoord op geven. AI citeert content die specifieke vragen beantwoordt. Dit is de basis: zonder dit heeft de rest geen zin.</p>
+      <p>Sean Ellis noemt dit "Question Ownership": de vragen van je doelgroep bezitten. Prioriteer niet op zoekvolume (wat SEO doet) maar op omzetnabijheid: welke vragen stelt iemand die dicht bij een aankoop staat? (<a href="https://seanellis.substack.com/p/aeo-blueprint-for-startups" target="_blank" rel="noopener">bron: Sean Ellis</a>)</p>
+
+      <h3>Hoe check je het?</h3>
+      <ul>
+        <li>Typ je product/dienst in ChatGPT en vraag: "welke vragen stellen mensen over [X]?"</li>
+        <li>Google je onderwerp en noteer alle "People Also Ask" vragen</li>
+        <li>Zoek op Reddit en forums: typ <code>site:reddit.com [onderwerp]</code> in Google</li>
+        <li>Lees de 1- en 2-sterren reviews van je concurrenten op Google, Trustpilot, Bol.com (daar staan de echte frustraties en onbeantwoorde vragen)</li>
+        <li>Gebruik <a href="https://answerthepublic.com/" target="_blank" rel="noopener">AnswerThePublic.com</a> voor een visuele kaart van alle vragen</li>
+        <li>Check de FAQ-pagina's van je top 3 concurrenten</li>
+        <li>Zoek je opdrachtgever op in ChatGPT, Perplexity en Google: welke vragen worden al beantwoord? Door wie?</li>
+      </ul>
+
+      <h3>Hoe verbeter je het?</h3>
+      <p><strong>Zelf doen:</strong> Maak een spreadsheet met de top 20 vragen. Prioriteer op koopintentie.</p>
+      <p>Voorbeeld: "welke fiets moet ik kopen voor woon-werkverkeer van 15 km?" is waardevoller dan "wat is een fiets?" De eerste vraag leidt direct tot een aankoop.</p>
+
+      <div class="callout tip">
+        <strong>Tip:</strong> iPullRank adviseert om te reverse-engineeren welke bronnen AI nu al citeert bij je concurrenten. Zoek een vraag op in ChatGPT, kijk welke bronnen worden geciteerd, en analyseer waarom die content wordt gekozen. (<a href="https://ipullrank.com/engineering-relevant-content-tips" target="_blank" rel="noopener">bron: iPullRank</a>)
+      </div>
+
+      <p><strong>Bronnen:</strong></p>
+      <ul>
+        <li><a href="https://seanellis.substack.com/p/aeo-blueprint-for-startups" target="_blank" rel="noopener">Sean Ellis: Question Ownership (Inclusion Stack laag 1)</a></li>
+        <li><a href="https://www.aleydasolis.com/en/ai-search/ai-search-optimization-checklist/" target="_blank" rel="noopener">Aleyda Solis: Checklist stap 1</a></li>
+      </ul>
+    </section>
+
+    <hr class="divider">
+
+    <!-- STAP 2 -->
+    <section class="section" id="stap2">
+      <div class="section-header">
+        <div class="draft-badge">2</div>
+        <div class="section-header-text">
+          <h2>Stap 2: Crawlbaarheid voor AI-bots</h2>
+        </div>
+      </div>
+
+      <h3>Wat is het?</h3>
+      <p>AI-systemen gebruiken crawlers om je website te lezen. De belangrijkste:</p>
+      <ul>
+        <li><strong>GPTBot</strong> (ChatGPT/OpenAI): 569 miljoen requests per maand</li>
+        <li><strong>ClaudeBot</strong> (Anthropic): 370 miljoen requests per maand</li>
+        <li><strong>AppleBot</strong> (Apple): 314 miljoen requests per maand</li>
+        <li><strong>PerplexityBot</strong> (Perplexity): 24,4 miljoen requests per maand</li>
+      </ul>
+      <p>Samen doen AI-crawlers 1,3 miljard requests per maand, 28% van het volume van Googlebot.</p>
+      <p style="font-size:0.82rem;color:var(--han-gray);">(<a href="https://vercel.com/blog/the-rise-of-the-ai-crawler" target="_blank" rel="noopener">Bron: Vercel</a>)</p>
+
+      <h3>Waarom is het belangrijk?</h3>
+      <p>Als AI je site niet kan crawlen, besta je niet in AI-antwoorden. Veel websites blokkeren AI-crawlers onbewust via verouderde robots.txt regels.</p>
+      <p><strong>Cruciaal:</strong> geen van de AI-crawlers voert JavaScript uit (<a href="https://vercel.com/blog/the-rise-of-the-ai-crawler" target="_blank" rel="noopener">bron: Vercel</a>, <a href="https://www.getpassionfruit.com/blog/javascript-rendering-and-ai-crawlers-can-llms-read-your-spa" target="_blank" rel="noopener">bevestigd in 2026</a>). Content die pas via JavaScript wordt geladen, ziet AI niet. Googlebot is de enige grote crawler die JavaScript wel kan uitvoeren.</p>
+      <p>De voorspelling is dat 65% van AI-crawlers JavaScript ondersteunt tegen 2027. Maar nu nog niet.</p>
+
+      <h3>Hoe check je het?</h3>
+      <ol>
+        <li><strong>Robots.txt:</strong> Ga naar <code>[website]/robots.txt</code> en zoek naar regels die GPTBot, ClaudeBot of PerplexityBot blokkeren (bijv. <code>User-agent: GPTBot</code> gevolgd door <code>Disallow: /</code>)</li>
+        <li><strong>JavaScript-content:</strong> Klik rechts op de pagina &gt; "Paginabron weergeven" en zoek een stuk tekst. Staat het in de broncode? Dan ziet AI het. Staat het er niet in? Dan wordt het via JavaScript geladen en ziet AI het niet.</li>
+        <li><strong>Accordeons:</strong> Check of de tekst in accordeons in de broncode staat. Bij WordPress/Shopify meestal wel. Bij custom JavaScript niet altijd.</li>
+      </ol>
+
+      <h3>Hoe verbeter je het?</h3>
+      <p><strong>Zelf doen:</strong> robots.txt lezen en checken (signaleren naar developer).</p>
+      <p><strong>Dev nodig:</strong></p>
+      <ul>
+        <li>robots.txt aanpassen als AI-crawlers geblokkeerd worden</li>
+        <li>Server-side rendering inschakelen als content via JavaScript wordt geladen</li>
+        <li><code>noindex</code> en <code>nosnippet</code> tags niet gebruiken op waardevolle content</li>
+      </ul>
+
+      <p><strong>Bronnen:</strong></p>
+      <ul>
+        <li><a href="https://vercel.com/blog/the-rise-of-the-ai-crawler" target="_blank" rel="noopener">Vercel: The Rise of the AI Crawler</a></li>
+        <li><a href="https://koanthic.com/en/ai-crawler-optimization-complete-guide-for-2026/" target="_blank" rel="noopener">Koanthic: AI Crawler Optimization Guide 2026</a></li>
+        <li><a href="https://www.searchviu.com/en/ai-crawlers-javascript-rendering/" target="_blank" rel="noopener">SearchVIU: AI Crawlers &amp; JavaScript Rendering</a></li>
+        <li><a href="https://platform.openai.com/docs/bots" target="_blank" rel="noopener">OpenAI: Crawler documentatie</a></li>
+        <li><a href="https://docs.perplexity.ai/guides/bots" target="_blank" rel="noopener">Perplexity: Crawler documentatie</a></li>
+      </ul>
+    </section>
+
+    <hr class="divider">
+
+    <!-- STAP 3 -->
+    <section class="section" id="stap3">
+      <div class="section-header">
+        <div class="draft-badge">3</div>
+        <div class="section-header-text">
+          <h2>Stap 3: Thematische breedte en diepte</h2>
+        </div>
+      </div>
+
+      <h3>Wat is het?</h3>
+      <p>AI zoekt antwoorden niet op een pagina maar over je hele site. Het begrijpt relaties tussen pagina's via interne links. Een topic cluster-model (pillar page + cluster pagina's) helpt AI om je site als autoriteit op een onderwerp te zien.</p>
+
+      <h3>Waarom is het belangrijk?</h3>
+      <p>AI Mode gebruikt "Query Fan-Out": het splitst een vraag op in 20-30 subvragen en zoekt per subvraag de beste bronnen (<a href="https://ipullrank.com/how-ai-mode-works" target="_blank" rel="noopener">bron: iPullRank</a>). Als jouw site maar een aspect van een onderwerp dekt, mis je de boot bij complexe vragen.</p>
+      <p>82% van AI Overview citaties komt van pagina's die 2+ clicks van de homepage verwijderd zijn. Je hele site moet op orde zijn, niet alleen de homepage. (<a href="https://ipullrank.com/engineering-relevant-content-tips" target="_blank" rel="noopener">bron: iPullRank</a>)</p>
+
+      <h3>Hoe check je het?</h3>
+      <ul>
+        <li>Heeft je opdrachtgever een hoofdpagina over het kernonderwerp (pillar page)?</li>
+        <li>Zijn er subpagina's die deelaspecten behandelen?</li>
+        <li>Linken de subpagina's naar elkaar en naar de hoofdpagina?</li>
+        <li>Zijn er "gaten" in de content? Onderwerpen waar klanten naar vragen maar waar geen pagina voor is?</li>
+      </ul>
+
+      <h3>Hoe verbeter je het?</h3>
+      <p><strong>Zelf doen:</strong></p>
+      <ul>
+        <li>Maak een contentmap: welke onderwerpen dekt de site, welke niet?</li>
+        <li>Identificeer de gaten: welke vragen (uit stap 1) hebben geen antwoord op de site?</li>
+        <li>Plan nieuwe content om de gaten te vullen</li>
+        <li>Zorg voor kruislinks tussen gerelateerde pagina's</li>
+      </ul>
+      <p><strong>Voorbeeld:</strong> een fietsenwinkel (Mantel) heeft pagina's over racefietsen, e-bikes, mountainbikes. Maar geen pagina over "welke fiets past bij mij?" die al die categorieen verbindt. Dat is de pillar page die mist.</p>
+
+      <div class="callout tip">
+        <strong>Tip:</strong> iPullRank adviseert ook "content pruning": verwijder pagina's die niet bij je kernthema's passen. Dat verbetert de prestaties van je overige content. (<a href="https://ipullrank.com/engineering-relevant-content-tips" target="_blank" rel="noopener">bron: iPullRank</a>)
+      </div>
+
+      <p><strong>Bronnen:</strong></p>
+      <ul>
+        <li><a href="https://www.aleydasolis.com/en/ai-search/ai-search-optimization-checklist/" target="_blank" rel="noopener">Aleyda Solis: Checklist stap 3</a></li>
+        <li><a href="https://www.aleydasolis.com/en/ai-search/google-query-fan-out/" target="_blank" rel="noopener">Aleyda Solis: Query Fan-Out uitgelegd</a></li>
+        <li><a href="https://ipullrank.com/engineering-relevant-content-tips" target="_blank" rel="noopener">iPullRank: Engineering Relevant Content (topic clustering)</a></li>
+      </ul>
+    </section>
+
+    <hr class="divider">
+
+    <!-- STAP 4 -->
+    <section class="section" id="stap4">
+      <div class="section-header">
+        <div class="draft-badge">4</div>
+        <div class="section-header-text">
+          <h2>Stap 4: Chunk-level schrijven</h2>
+        </div>
+      </div>
+
+      <h3>Wat is het?</h3>
+      <p>AI leest niet je hele pagina. Het pakt specifieke passages ("chunks") eruit, meestal 100-300 woorden. Elke paragraaf moet daarom op zichzelf begrijpelijk zijn, zonder de rest van de pagina.</p>
+
+      <h3>Waarom is het belangrijk?</h3>
+      <p>Als AI een paragraaf uit je pagina haalt en die is niet op zichzelf begrijpelijk, wordt hij niet geciteerd. Het gaat niet om hele pagina's, het gaat om specifieke passages.</p>
+      <p>Chris Green beschrijft dit als "atomaire content": elke sectie behandelt precies een concept. (<a href="https://www.chris-green.net/post/content-structure-for-ai-search" target="_blank" rel="noopener">bron: Chris Green</a>)</p>
+      <p>Nikola Roza (GEO expert) adviseert: korte zinnen, korte dependency trees. Elke zin beantwoordt een impliciete vraag. (<a href="https://learningseo.io/seo_roadmap/optimize-ai-search/" target="_blank" rel="noopener">bron: LearningSEO expert tips</a>)</p>
+
+      <h3>Hoe check je het?</h3>
+      <ul>
+        <li>Kopieer een willekeurige paragraaf van de site van je opdrachtgever</li>
+        <li>Lees hem los, zonder de rest van de pagina</li>
+        <li>Begrijp je waar het over gaat? Is het feitelijk en specifiek?</li>
+        <li>Zo nee: herschrijven</li>
+      </ul>
+
+      <h3>Hoe verbeter je het?</h3>
+      <p><strong>Zelf doen:</strong></p>
+      <ul>
+        <li>1 concept per paragraaf, niet 3 onderwerpen door elkaar</li>
+        <li>Elke sectie begint met een duidelijke H2 of H3 kop</li>
+        <li>Koppen als vragen formuleren ("Welke racefiets past bij mij?" in plaats van "Onze producten")</li>
+        <li>De eerste zin van elke sectie geeft het kernpunt</li>
+      </ul>
+
+      <p><strong>Voorbeeld:</strong></p>
+      <p>Niet zo:</p>
+      <blockquote class="bad">Wij zijn een gezellige camping waar je heerlijk kunt genieten van de natuur en onze prachtige faciliteiten.</blockquote>
+
+      <p>Wel zo:</p>
+      <blockquote class="good">Avonturencamping Stroombroek is een familiecamping in Braamt (Achterhoek) met 85 kampeerplekken, een binnenzwembad en een klimbos. De camping is geschikt voor gezinnen met kinderen van 4-12 jaar.</blockquote>
+
+      <div class="callout tip">
+        <strong>Tip:</strong> Daniel K. Cheung (GEO expert) adviseert: "Vervang marketingcopy door bijna saaie declaratieve tekst." Dat klinkt niet sexy, maar het is wat AI citeert. (<a href="https://learningseo.io/seo_roadmap/optimize-ai-search/" target="_blank" rel="noopener">bron: LearningSEO expert tips</a>)
+      </div>
+
+      <p><strong>Bronnen:</strong></p>
+      <ul>
+        <li><a href="https://www.aleydasolis.com/en/ai-search/ai-search-optimization-checklist/" target="_blank" rel="noopener">Aleyda Solis: Checklist stap 4</a></li>
+        <li><a href="https://www.chris-green.net/post/content-structure-for-ai-search" target="_blank" rel="noopener">Chris Green: Content Structure for AI Search</a></li>
+        <li><a href="https://www.linkedin.com/posts/jes-scholz_want-your-content-to-stand-out-to-ai-chatbots-activity-7314888785022840832-mOjG/" target="_blank" rel="noopener">Jes Scholz: Break content into chunks (LinkedIn)</a></li>
+      </ul>
+    </section>
+
+    <hr class="divider">
+
+    <!-- STAP 5 -->
+    <section class="section" id="stap5">
+      <div class="section-header">
+        <div class="draft-badge">5</div>
+        <div class="section-header-text">
+          <h2>Stap 5: Optimaliseer voor antwoordsynthese</h2>
+        </div>
+      </div>
+
+      <h3>Wat is het?</h3>
+      <p>AI synthetiseert antwoorden uit meerdere bronnen. Je content moet zo geschreven zijn dat AI er makkelijk een antwoord uit kan samenstellen. De eerste zin van elke sectie is het meest waarschijnlijk om geciteerd te worden.</p>
+
+      <h3>Waarom is het belangrijk?</h3>
+      <p>AI scant de eerste zinnen van secties voor potentiele citaties. Als je antwoord pas in de derde alinea staat, pakt AI het niet. De omgekeerde piramide (begin met het belangrijkste) is essentieel.</p>
+
+      <h3>Hoe check je het?</h3>
+      <ul>
+        <li>Lees de eerste zin van elke sectie op de pagina van je opdrachtgever</li>
+        <li>Geeft die zin direct antwoord op de vraag in de heading?</li>
+        <li>Zijn de antwoorden feitelijk en specifiek (niet "wij bieden uitstekende service")?</li>
+        <li>Zijn de headings vragen die de doelgroep stelt?</li>
+      </ul>
+
+      <h3>Hoe verbeter je het?</h3>
+      <p><strong>Zelf doen:</strong></p>
+
+      <p><strong>Headings als vragen:</strong></p>
+      <p>Niet zo:</p>
+      <blockquote class="bad">Onze producten / Over ons / Diensten</blockquote>
+      <p>Wel zo:</p>
+      <blockquote class="good">Welke racefiets past bij mij? / Hoeveel kost een e-bike in 2026? / Wat is het verschil tussen carbon en aluminium?</blockquote>
+
+      <p><strong>Eerste zin = antwoord:</strong><br>
+      Begin elke sectie met het kernantwoord. Daarna de uitleg en details.</p>
+
+      <p><strong>FAQ's toevoegen:</strong></p>
+      <ul>
+        <li>Eerste zin beantwoordt de vraag direct</li>
+        <li>40-60 woorden per antwoord</li>
+        <li>Feitelijk, geen marketing-taal</li>
+        <li>Voeg FAQPage schema markup toe (zie stap 8 voor schema)</li>
+      </ul>
+
+      <p><strong>Voorbeeld van een goede FAQ:</strong></p>
+      <blockquote class="good">
+        <strong>V: Wat kost een skipas in Oostenrijk in 2026?</strong><br>
+        A: Een dagpas voor skigebieden in Oostenrijk kost gemiddeld 55-75 euro in het hoogseizoen. Grotere gebieden zoals Ischgl of St. Anton rekenen 70-80 euro per dag. Een weekpas is vaak voordeliger: reken op 250-350 euro voor 6 dagen.
+      </blockquote>
+
+      <p><strong>Vergelijkingscontent:</strong><br>
+      AI houdt van vergelijkingen. Maak tabellen, voor/nadelen-lijsten, decision trees.</p>
+      <ul>
+        <li>Vergelijk producten, diensten, opties</li>
+        <li>Wees eerlijk en objectief (AI waardeert neutraliteit)</li>
+        <li>Voorbeeld: vergelijkingstabel voltijd vs deeltijd, carbon vs aluminium, camping vs hotel</li>
+      </ul>
+
+      <p>Krinal Mehta (GEO expert): "Vergelijkingscontent publiceren is een van de snelste manieren om in AI-antwoorden te komen, vooral voor nieuwere merken." (<a href="https://learningseo.io/seo_roadmap/optimize-ai-search/" target="_blank" rel="noopener">bron: LearningSEO expert tips</a>)</p>
+
+      <p><strong>Bronnen:</strong></p>
+      <ul>
+        <li><a href="https://www.aleydasolis.com/en/ai-search/ai-search-optimization-checklist/" target="_blank" rel="noopener">Aleyda Solis: Checklist stap 5</a></li>
+        <li><a href="https://searchengineland.com/how-to-get-cited-by-ai-seo-insights-from-8000-ai-citations-455284" target="_blank" rel="noopener">Search Engine Land: How to get cited by AI (8.000 citaties studie)</a></li>
+      </ul>
+    </section>
+
+    <hr class="divider">
+
+    <!-- STAP 6 -->
+    <section class="section" id="stap6">
+      <div class="section-header">
+        <div class="draft-badge">6</div>
+        <div class="section-header-text">
+          <h2>Stap 6: Optimaliseer voor citatiewaardigheid</h2>
+        </div>
+      </div>
+
+      <h3>Wat is het?</h3>
+      <p>Je content moet zo gestructureerd zijn dat AI het kan citeren. Citeerbare passages zijn 40-60 woorden, feitelijk, specifiek en op zichzelf begrijpelijk. AI citeert niet de langste of de mooiste tekst, maar de tekst die het best past bij de vraag.</p>
+
+      <h3>Waarom is het belangrijk?</h3>
+      <p>Uit een studie van 8.000 AI-citaties (<a href="https://searchengineland.com/how-to-get-cited-by-ai-seo-insights-from-8000-ai-citations-455284" target="_blank" rel="noopener">Search Engine Land</a>):</p>
+      <ul>
+        <li>AI citeert gezaghebbende, neutrale bronnen</li>
+        <li>Sterke organische zoekzichtbaarheid leidt tot AI-citaties, niet omgekeerd</li>
+        <li>Vergelijkingsportals en review-sites worden vaak geciteerd</li>
+      </ul>
+      <p>Emily Richardson (GEO expert): "Firsthand experience wint. Schrijf 'I tested', 'We used this tool', 'Here's what happened after 30 days.'" (<a href="https://learningseo.io/seo_roadmap/optimize-ai-search/" target="_blank" rel="noopener">bron: LearningSEO expert tips</a>)</p>
+
+      <h3>Hoe check je het?</h3>
+      <ul>
+        <li>Zoek een relevante vraag over je opdrachtgever in ChatGPT</li>
+        <li>Wordt je opdrachtgever geciteerd?</li>
+        <li>Zo ja: welke passage wordt gebruikt? Waarom die?</li>
+        <li>Zo nee: welke concurrent wordt geciteerd en waarom is hun tekst beter?</li>
+      </ul>
+
+      <h3>Hoe verbeter je het?</h3>
+      <p><strong>Zelf doen:</strong></p>
+
+      <p><strong>Citeerbare passages schrijven:</strong></p>
+      <ul>
+        <li>40-60 woorden per passage</li>
+        <li>Feitelijk en specifiek (cijfers, locaties, kenmerken)</li>
+        <li>Direct antwoord op een vraag</li>
+        <li>Op zichzelf begrijpelijk (zonder context van de rest van de pagina)</li>
+      </ul>
+
+      <p><strong>Eigen data delen:</strong></p>
+      <ul>
+        <li>Concrete cijfers uit eigen ervaring</li>
+        <li>Case studies, resultaten, voorbeelden</li>
+        <li>"92% van onze studenten vindt binnen 3 maanden een baan" is citeerbaar. "Goede baankansen" is dat niet.</li>
+      </ul>
+
+      <p><strong>Frameworks en termen benoemen:</strong><br>
+      Sean Ellis adviseert: benoem je eigen frameworks, definieer termen precies, deel data. Test: als een AI dit in een alinea moet samenvatten, wat pakt het eruit? (<a href="https://seanellis.substack.com/p/aeo-blueprint-for-startups" target="_blank" rel="noopener">bron: Sean Ellis, Citation Engineering</a>)</p>
+
+      <p><strong>Bronnen:</strong></p>
+      <ul>
+        <li><a href="https://seanellis.substack.com/p/aeo-blueprint-for-startups" target="_blank" rel="noopener">Sean Ellis: Citation Engineering (Inclusion Stack laag 4)</a></li>
+        <li><a href="https://searchengineland.com/how-to-get-cited-by-ai-seo-insights-from-8000-ai-citations-455284" target="_blank" rel="noopener">Search Engine Land: How to get cited by AI</a></li>
+        <li><a href="https://www.tryprofound.com/blog/ai-platform-citation-patterns" target="_blank" rel="noopener">Profound: AI Platform Citation Patterns</a></li>
+      </ul>
+    </section>
+
+    <hr class="divider">
+
+    <!-- STAP 7 -->
+    <section class="section" id="stap7">
+      <div class="section-header">
+        <div class="draft-badge">7</div>
+        <div class="section-header-text">
+          <h2>Stap 7: Autoriteitssignalen</h2>
+        </div>
+      </div>
+
+      <h3>Wat is het?</h3>
+      <p>AI zoekt consensus over meerdere bronnen. Niet alleen wat je op je eigen site zegt, maar wat anderen over je zeggen. Reviews, mentions, vermeldingen op externe sites tellen mee.</p>
+      <p>Sean Ellis noemt dit "Offsite Consensus": autoriteit alleen op je eigen domein plateaut. AI synthetiseert informatie vanuit Reddit, reviews, vakpublicaties, podcasts, community threads. (<a href="https://seanellis.substack.com/p/aeo-blueprint-for-startups" target="_blank" rel="noopener">bron: Sean Ellis</a>)</p>
+
+      <h3>Waarom is het belangrijk?</h3>
+      <ul>
+        <li>ChatGPT citeert Wikipedia in 47,9% van de gevallen</li>
+        <li>Google AI Overviews gebruikt Reddit in 21% en YouTube in 18,8%</li>
+        <li>Perplexity leunt op Reddit voor 46,7%</li>
+      </ul>
+      <p style="font-size:0.82rem;color:var(--han-gray);">(<a href="https://www.tryprofound.com/blog/ai-platform-citation-patterns" target="_blank" rel="noopener">Bron: Profound</a>)</p>
+      <p>Wie alleen zijn eigen website optimaliseert, mist meer dan de helft. David Hunter (GEO expert): "Reviews are AI rocket fuel." (<a href="https://learningseo.io/seo_roadmap/optimize-ai-search/" target="_blank" rel="noopener">bron: LearningSEO expert tips</a>)</p>
+
+      <h3>Hoe check je het?</h3>
+      <ul>
+        <li>Zoek je opdrachtgever op Google: wat zeggen reviews?</li>
+        <li>Check Trustpilot, Kiyoh, Google Reviews: hoeveel reviews, welke score?</li>
+        <li>Zoek op Reddit/forums: wordt er over je opdrachtgever gepraat?</li>
+        <li>Check Wikipedia: heeft je opdrachtgever een pagina? Is die actueel?</li>
+        <li>Zoek je opdrachtgever op in ChatGPT: wordt er gerefereerd aan externe bronnen over je merk?</li>
+      </ul>
+
+      <h3>Hoe verbeter je het?</h3>
+      <p><strong>Zelf doen:</strong></p>
+      <ul>
+        <li>Moedig klanten aan om Google Reviews achter te laten</li>
+        <li>Reageer op reviews (positief en negatief)</li>
+        <li>Reageer op social media mentions</li>
+        <li>Beantwoord vragen op forums en in Facebook-groepen</li>
+        <li>De regel: bijdragen met inhoud, niet met promotie</li>
+      </ul>
+
+      <p><strong>Langere termijn:</strong></p>
+      <ul>
+        <li>Wikipedia-pagina up-to-date houden (als die er is)</li>
+        <li>Gastartikelen schrijven voor vakpublicaties</li>
+        <li>Aanwezig zijn op relevante platforms (Studiekeuze123 voor onderwijs, Tweakers voor tech, reisforums voor reisbureaus, kampeerforums voor campings)</li>
+      </ul>
+
+      <div class="callout tip">
+        <strong>Tip:</strong> Ben Goodey (GEO expert) adviseert: reverse engineer welke bronnen AI citeert bij je concurrenten. Creeer vervolgens hyper-specifiek bronmateriaal dat die bronnen overtreft. (<a href="https://learningseo.io/seo_roadmap/optimize-ai-search/" target="_blank" rel="noopener">bron: LearningSEO expert tips</a>)
+      </div>
+
+      <p><strong>Bronnen:</strong></p>
+      <ul>
+        <li><a href="https://seanellis.substack.com/p/aeo-blueprint-for-startups" target="_blank" rel="noopener">Sean Ellis: Offsite Consensus (Inclusion Stack laag 3)</a></li>
+        <li><a href="https://www.tryprofound.com/blog/ai-platform-citation-patterns" target="_blank" rel="noopener">Profound: AI Platform Citation Patterns</a></li>
+      </ul>
+    </section>
+
+    <hr class="divider">
+
+    <!-- STAP 8 -->
+    <section class="section" id="stap8">
+      <div class="section-header">
+        <div class="draft-badge">8</div>
+        <div class="section-header-text">
+          <h2>Stap 8: Multimodale ondersteuning</h2>
+        </div>
+      </div>
+
+      <h3>Wat is het?</h3>
+      <p>AI kan geen afbeeldingen "zien" zoals wij dat doen. Het leest de alt-tekst en het bijschrift. Tabellen die als screenshot zijn geplaatst, zijn onzichtbaar voor AI.</p>
+
+      <h3>Waarom is het belangrijk?</h3>
+      <p>Als je afbeeldingen geen goede alt-tekst en bijschrift hebben, mist AI die informatie. Vergelijkingstabellen als screenshot zijn waardeloos voor AI.</p>
+
+      <h3>Hoe check je het?</h3>
+      <ul>
+        <li>Klik rechts op een afbeelding op de site van je opdrachtgever &gt; "Afbeelding inspecteren"</li>
+        <li>Check het <code>alt</code> attribuut. Staat er "foto1.jpg" of "DSC_0394"? Dan moet het beter.</li>
+        <li>Check of er een bijschrift (caption) onder de afbeelding staat</li>
+        <li>Zijn er tabellen die als afbeelding zijn geplaatst? Die moeten vervangen worden door HTML tabellen.</li>
+      </ul>
+
+      <h3>Hoe verbeter je het?</h3>
+      <p><strong>Zelf doen (in het CMS):</strong></p>
+      <ul>
+        <li><strong>Alt-tekst:</strong> beschrijf wat je ziet. "Studenten werkgroep verpleegkunde HAN Nijmegen" in plaats van "foto1" of "DSC_0394"</li>
+        <li><strong>Bijschrift:</strong> voeg een bijschrift (caption) toe onder afbeeldingen. De meeste CMS'en ondersteunen dit.</li>
+        <li><strong>Tabellen:</strong> vergelijkingstabellen als HTML tabel maken, niet als screenshot van een Excel</li>
+      </ul>
+
+      <p><strong>Dev nodig (optioneel):</strong></p>
+      <ul>
+        <li><code>&lt;figure&gt;</code> + <code>&lt;figcaption&gt;</code> implementeren (de HTML-standaard die AI het best herkent). Als je CMS <code>&lt;div class="image_caption"&gt;</code> gebruikt, werkt dat ook, maar <code>&lt;figure&gt;</code> is de standaard.</li>
+      </ul>
+
+      <p><strong>Bronnen:</strong></p>
+      <ul>
+        <li><a href="https://www.aleydasolis.com/en/ai-search/ai-search-optimization-checklist/" target="_blank" rel="noopener">Aleyda Solis: Checklist stap 8</a></li>
+      </ul>
+    </section>
+
+    <hr class="divider">
+
+    <!-- STAP 9 -->
+    <section class="section" id="stap9">
+      <div class="section-header">
+        <div class="draft-badge">9</div>
+        <div class="section-header-text">
+          <h2>Stap 9: Personalisatie-veerkracht</h2>
+        </div>
+      </div>
+
+      <h3>Wat is het?</h3>
+      <p>AI personaliseert antwoorden op basis van gebruikerscontext: locatie, eerdere vragen, apparaat, taal. Je content moet zo geschreven zijn dat het relevant blijft voor verschillende contexten en gebruikers.</p>
+
+      <h3>Waarom is het belangrijk?</h3>
+      <p>Google AI Mode gebruikt "user embeddings": gepersonaliseerde profielen die bepalen welke antwoorden een gebruiker ziet. Dezelfde vraag kan verschillende antwoorden genereren voor verschillende gebruikers. (<a href="https://ipullrank.com/how-ai-mode-works" target="_blank" rel="noopener">bron: iPullRank</a>)</p>
+      <p>Als je content alleen relevant is voor een specifieke doelgroep of locatie, mis je alle andere varianten van dezelfde vraag.</p>
+
+      <h3>Hoe check je het?</h3>
+      <ul>
+        <li>Dekt de content van je opdrachtgever meerdere intents? (informatief, commercieel, vergelijkend)</li>
+        <li>Is er lokale informatie waar relevant? (locatie, bereikbaarheid, regio)</li>
+        <li>Wordt de content in meerdere contexten relevant? (voor beginners en gevorderden, voor kopers en orienterenden)</li>
+      </ul>
+
+      <h3>Hoe verbeter je het?</h3>
+      <p><strong>Zelf doen:</strong></p>
+      <ul>
+        <li>Schrijf content die meerdere zoekintents afdekt (niet alleen "koop nu" maar ook "wat is het verschil tussen")</li>
+        <li>Voeg lokale informatie toe waar relevant (adres, regio, bereikbaarheid)</li>
+        <li>Maak content voor verschillende niveaus (beginner vs gevorderde)</li>
+        <li>Bouw entiteitsbekendheid op via links van betrouwbare domeinen</li>
+      </ul>
+
+      <p><strong>Voorbeeld:</strong> een pagina over "racefiets kopen" die zowel de beginner ("wat is een racefiets?") als de gevorderde ("carbon vs aluminium frame") bedient, is veerkrachtiger dan een pagina die alleen het ene of het andere doet.</p>
+
+      <p><strong>Bronnen:</strong></p>
+      <ul>
+        <li><a href="https://www.aleydasolis.com/en/ai-search/ai-search-optimization-checklist/" target="_blank" rel="noopener">Aleyda Solis: Checklist stap 9</a></li>
+        <li><a href="https://ipullrank.com/how-ai-mode-works" target="_blank" rel="noopener">iPullRank: How AI Mode Works (user embeddings)</a></li>
+      </ul>
+    </section>
+
+    <hr class="divider">
+
+    <!-- STAP 10 -->
+    <section class="section" id="stap10">
+      <div class="section-header">
+        <div class="draft-badge">10</div>
+        <div class="section-header-text">
+          <h2>Stap 10: Meten</h2>
+        </div>
+      </div>
+
+      <h3>Wat is het?</h3>
+      <p>Regelmatig checken of je opdrachtgever wordt genoemd in AI-antwoorden. En bijhouden hoe dat verandert over tijd. GEO is geen eenmalige actie.</p>
+
+      <h3>Waarom is het belangrijk?</h3>
+      <p>De nieuwe KPIs zijn anders dan bij SEO. Het gaat niet om ranking posities maar om mentions, citaties en sentiment.</p>
+
+      <h3>De 5 belangrijkste nieuwe KPIs</h3>
+      <ol>
+        <li><strong>AI Citation Rate:</strong> hoe vaak wordt je site geciteerd in AI-antwoorden?</li>
+        <li><strong>AI Share of Voice:</strong> jouw mentions vs concurrenten in AI-antwoorden</li>
+        <li><strong>AI Referral Traffic:</strong> hoeveel verkeer komt via AI naar je site?</li>
+        <li><strong>Brand Mention Frequency:</strong> hoe vaak noemt AI je merk?</li>
+        <li><strong>AI Sentiment Score:</strong> spreekt AI positief of neutraal over je?</li>
+      </ol>
+      <p>Duane Forrester (voormalig Bing) definieert in totaal 12 nieuwe KPIs, waaronder ook Chunk Retrieval Frequency, Semantic Density Score en Zero-Click Surface Presence. (<a href="https://searchengineland.com/new-generative-ai-search-kpis-456497" target="_blank" rel="noopener">Bron: Search Engine Land</a>)</p>
+
+      <h3>Hoe check je het?</h3>
+
+      <p><strong>Niveau 1: handmatig (gratis, 20 min/maand)</strong></p>
+      <ul>
+        <li>Maak een spreadsheet met 15-20 vragen die klanten stellen</li>
+        <li>Zoek elke vraag op in ChatGPT, Google (AI Overviews) en Perplexity</li>
+        <li>Noteer per vraag:
+          <ul>
+            <li>Word je genoemd? (ja/nee)</li>
+            <li>Word je geciteerd met link? (ja/nee)</li>
+            <li>Wie wordt er wel genoemd?</li>
+            <li>Wat is het sentiment? (positief/neutraal/negatief)</li>
+          </ul>
+        </li>
+        <li>Herhaal elke maand, track de trend</li>
+      </ul>
+
+      <p><strong>Niveau 2: Google Analytics (gratis)</strong></p>
+      <ul>
+        <li>Maak een apart kanaal aan voor AI-verkeer in GA4</li>
+        <li>Filter op referrals van chatgpt.com, perplexity.ai, gemini.google.com</li>
+        <li>Vergelijk gedrag: blijven AI-bezoekers langer? Converteren ze beter?</li>
+        <li>AI-bezoekers converteren 13x hoger dan traditionele zoekbezoekers (27% vs 2,1%) (<a href="https://maximuslabs.ai/generative-engine-optimization/geo-case-studies-success-stories" target="_blank" rel="noopener">bron: Maximus Labs</a>)</li>
+      </ul>
+
+      <p><strong>Niveau 3: tools (betaald)</strong></p>
+      <ul>
+        <li><a href="https://peec.ai/" target="_blank" rel="noopener">Peec.ai</a>: trackt zichtbaarheid in 10+ AI-platforms. Onderscheidt "used" (je content informeerde het antwoord) en "cited" (je URL wordt expliciet genoemd).</li>
+        <li><a href="https://otterly.ai/" target="_blank" rel="noopener">Otterly.ai</a>: monitort brand mentions in ChatGPT, Perplexity, Google AI Overviews. Vergelijkt je met concurrenten over tijd.</li>
+        <li><a href="https://ahrefs.com/brand-radar" target="_blank" rel="noopener">Ahrefs Brand Radar</a>: merkzichtbaarheid in AI, van het bekende Ahrefs</li>
+        <li><a href="https://www.semrush.com/semrush-ai-toolkit/" target="_blank" rel="noopener">Semrush AI Toolkit</a>: AI mentions tracking, van Semrush</li>
+        <li><a href="https://www.tryprofound.com/" target="_blank" rel="noopener">Profound</a>: enterprise platform voor AI visibility</li>
+      </ul>
+      <p style="font-size:0.82rem;color:var(--han-gray);">(<a href="https://www.rankability.com/blog/best-ai-search-visibility-tracking-tools/" target="_blank" rel="noopener">Meer tools: Rankability overzicht van 22 tools</a>)</p>
+
+      <h3>Hoe verbeter je het?</h3>
+      <p><strong>Zelf doen:</strong> Begin met niveau 1. 20 vragen, 1x per maand. Dat is 20 minuten werk en geeft je een duidelijk beeld.</p>
+
+      <div class="callout pink">
+        <strong>Valkuil (uit Aleyda's checklist):</strong> Ga er niet van uit dat AI-zoekgedrag hetzelfde is als Google-zoekgedrag. De vragen zijn anders, het gedrag is anders, de conversie is anders. Meet het apart.
+      </div>
+
+      <p><strong>Bronnen:</strong></p>
+      <ul>
+        <li><a href="https://searchengineland.com/new-generative-ai-search-kpis-456497" target="_blank" rel="noopener">Duane Forrester: 12 nieuwe KPIs</a></li>
+        <li><a href="https://www.rankability.com/blog/best-ai-search-visibility-tracking-tools/" target="_blank" rel="noopener">Rankability: 22 Best AI Search Visibility Tools</a></li>
+        <li><a href="https://backlinko.com/llm-tracking-tools" target="_blank" rel="noopener">Backlinko: 5 AI Visibility Tools</a></li>
+      </ul>
+    </section>
+
+    <hr class="divider">
+
+    <!-- STRUCTURED DATA -->
+    <section class="section" id="schema">
+      <div class="section-header">
+        <div class="draft-badge" style="background:var(--han-orange);color:var(--han-black);">+</div>
+        <div class="section-header-text">
+          <h2>Aanvullend: Structured Data (Schema Markup)</h2>
+          <p class="section-sub">Komt terug in stappen 2, 5 en 8</p>
+        </div>
+      </div>
+
+      <h3>Wat is het?</h3>
+      <p>Schema.org markup is code die AI en zoekmachines vertelt precies wat er op je pagina staat. Het is als een etiket op je content.</p>
+
+      <h3>Waarom is het belangrijk?</h3>
+      <p>Google's John Mueller: "Zorg voor goede structured data, dat is een van de beste manieren om in AI experiences te verschijnen." (<a href="https://developers.google.com/search/blog/2025/05/succeeding-in-ai-search" target="_blank" rel="noopener">bron: Google</a>)</p>
+
+      <h3>De belangrijkste schema types</h3>
+      <ul>
+        <li><strong>FAQPage:</strong> voor pagina's met veelgestelde vragen</li>
+        <li><strong>Product:</strong> voor productpagina's (prijs, voorraad, reviews)</li>
+        <li><strong>LocalBusiness:</strong> voor lokale bedrijven (adres, openingstijden)</li>
+        <li><strong>HowTo:</strong> voor handleidingen en instructies</li>
+        <li><strong>Review/AggregateRating:</strong> voor beoordelingen</li>
+        <li><strong>BreadcrumbList:</strong> voor navigatie</li>
+        <li><strong>Course:</strong> voor cursussen en opleidingen</li>
+      </ul>
+
+      <h3>Hoe check je het?</h3>
+      <ul>
+        <li>Ga naar <a href="https://search.google.com/test/rich-results" target="_blank" rel="noopener">Google Rich Results Test</a></li>
+        <li>Vul de URL van je opdrachtgever in</li>
+        <li>Kijk welke schema types worden herkend en of er fouten zijn</li>
+      </ul>
+
+      <h3>Hoe verbeter je het?</h3>
+      <p><strong>Dev nodig:</strong></p>
+      <ul>
+        <li>Schema markup toevoegen in de HTML of via het CMS</li>
+        <li>WordPress: plugins zoals Yoast SEO of Rank Math kunnen FAQ schema automatisch toevoegen</li>
+        <li>Shopify: vergelijkbare apps beschikbaar</li>
+        <li>Magento: extensies voor structured data</li>
+      </ul>
+
+      <p><strong>Voorbeeld Mantel.com:</strong> Heeft al Organization schema + AggregateRating (122.000+ Trustpilot reviews). Heeft ook FAQPage schema op hun productcategoriepagina's. Goed voorbeeld van hoe het moet.</p>
+
+      <p><strong>Bronnen:</strong></p>
+      <ul>
+        <li><a href="https://developers.google.com/search/docs/appearance/ai-features" target="_blank" rel="noopener">Google: AI features and your website</a></li>
+        <li><a href="https://developers.google.com/search/blog/2025/05/succeeding-in-ai-search" target="_blank" rel="noopener">Google: Succeeding in AI Search</a></li>
+        <li><a href="https://search.google.com/test/rich-results" target="_blank" rel="noopener">Google Rich Results Test</a></li>
+      </ul>
+    </section>
+
+    <hr class="divider">
+
+    <!-- SAMENVATTING -->
+    <section class="section" id="samenvatting">
+      <div class="section-header">
+        <div class="draft-badge" style="background:var(--han-gray);">S</div>
+        <div class="section-header-text">
+          <h2>Samenvatting: wie doet wat?</h2>
+        </div>
+      </div>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Actie</th>
+            <th>Zelf doen</th>
+            <th>Dev nodig</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Vragen onderzoeken (stap 1)</td>
+            <td><span class="badge-ja">Ja</span></td>
+            <td><span class="badge-nee">Nee</span></td>
+          </tr>
+          <tr>
+            <td>Robots.txt checken (stap 2)</td>
+            <td><span class="badge-ja">Ja</span> (lezen)</td>
+            <td><span class="badge-ja">Ja</span> (aanpassen)</td>
+          </tr>
+          <tr>
+            <td>Contentmap maken (stap 3)</td>
+            <td><span class="badge-ja">Ja</span></td>
+            <td><span class="badge-nee">Nee</span></td>
+          </tr>
+          <tr>
+            <td>Chunk-level schrijven (stap 4)</td>
+            <td><span class="badge-ja">Ja</span></td>
+            <td><span class="badge-nee">Nee</span></td>
+          </tr>
+          <tr>
+            <td>Headings als vragen (stap 5)</td>
+            <td><span class="badge-ja">Ja</span></td>
+            <td><span class="badge-nee">Nee</span></td>
+          </tr>
+          <tr>
+            <td>FAQ's schrijven (stap 5)</td>
+            <td><span class="badge-ja">Ja</span></td>
+            <td><span class="badge-nee">Nee</span></td>
+          </tr>
+          <tr>
+            <td>Vergelijkingstabellen (stap 5)</td>
+            <td><span class="badge-ja">Ja</span></td>
+            <td><span class="badge-nee">Nee</span></td>
+          </tr>
+          <tr>
+            <td>Citeerbare passages schrijven (stap 6)</td>
+            <td><span class="badge-ja">Ja</span></td>
+            <td><span class="badge-nee">Nee</span></td>
+          </tr>
+          <tr>
+            <td>Reviews stimuleren (stap 7)</td>
+            <td><span class="badge-ja">Ja</span></td>
+            <td><span class="badge-nee">Nee</span></td>
+          </tr>
+          <tr>
+            <td>Alt-teksten schrijven (stap 8)</td>
+            <td><span class="badge-ja">Ja</span></td>
+            <td><span class="badge-nee">Nee</span></td>
+          </tr>
+          <tr>
+            <td>Bijschriften toevoegen (stap 8)</td>
+            <td><span class="badge-ja">Ja</span></td>
+            <td><span class="badge-nee">Nee</span></td>
+          </tr>
+          <tr>
+            <td>Content voor meerdere intents (stap 9)</td>
+            <td><span class="badge-ja">Ja</span></td>
+            <td><span class="badge-nee">Nee</span></td>
+          </tr>
+          <tr>
+            <td>AI visibility handmatig meten (stap 10)</td>
+            <td><span class="badge-ja">Ja</span></td>
+            <td><span class="badge-nee">Nee</span></td>
+          </tr>
+          <tr>
+            <td>Schema markup toevoegen</td>
+            <td><span class="badge-nee">Nee</span></td>
+            <td><span class="badge-ja">Ja</span></td>
+          </tr>
+          <tr>
+            <td>Server-side rendering (stap 2)</td>
+            <td><span class="badge-nee">Nee</span></td>
+            <td><span class="badge-ja">Ja</span></td>
+          </tr>
+          <tr>
+            <td>GA4 AI-kanaal instellen (stap 10)</td>
+            <td><span class="badge-nee">Nee</span></td>
+            <td><span class="badge-ja">Ja</span></td>
+          </tr>
+          <tr>
+            <td>Figure/figcaption implementeren (stap 8)</td>
+            <td><span class="badge-nee">Nee</span></td>
+            <td><span class="badge-ja">Ja</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <hr class="divider">
+
+    <!-- BRONNEN -->
+    <section class="section" id="bronnen">
+      <div class="section-header">
+        <div class="draft-badge" style="background:var(--han-gray);">B</div>
+        <div class="section-header-text">
+          <h2>Bronnen</h2>
+        </div>
+      </div>
+
+      <h3>Checklists en frameworks</h3>
+      <ul class="source-list">
+        <li><a href="https://www.aleydasolis.com/en/ai-search/ai-search-optimization-checklist/" target="_blank" rel="noopener">Aleyda Solis: AI Search Content Optimization Checklist (10 stappen)</a></li>
+        <li><a href="https://seanellis.substack.com/p/aeo-blueprint-for-startups" target="_blank" rel="noopener">Sean Ellis: AEO Blueprint / Inclusion Stack (4 lagen)</a></li>
+        <li><a href="https://ipullrank.com/engineering-relevant-content-tips" target="_blank" rel="noopener">iPullRank: Engineering Relevant Content (5 disciplines)</a></li>
+        <li><a href="https://developers.google.com/search/blog/2025/05/succeeding-in-ai-search" target="_blank" rel="noopener">Google: Succeeding in AI Search (officieel advies)</a></li>
+        <li><a href="https://developers.google.com/search/docs/appearance/ai-features" target="_blank" rel="noopener">Google: AI features and your website</a></li>
+      </ul>
+
+      <h3>Hoe AI search werkt</h3>
+      <ul class="source-list">
+        <li><a href="https://ipullrank.com/how-ai-mode-works" target="_blank" rel="noopener">iPullRank: How AI Mode Works (patent-analyse)</a></li>
+        <li><a href="https://www.aleydasolis.com/en/ai-search/key-traditional-search-ai-comparison/" target="_blank" rel="noopener">Aleyda Solis: SEO vs GEO vergelijking (5 dimensies)</a></li>
+        <li><a href="https://www.aleydasolis.com/en/ai-search/google-query-fan-out/" target="_blank" rel="noopener">Aleyda Solis: Google Query Fan-Out</a></li>
+        <li><a href="https://wordlift.io/blog/en/query-fan-out-ai-search/" target="_blank" rel="noopener">WordLift: Query Fan-Out data-driven approach</a></li>
+        <li><a href="https://duaneforresterdecodes.substack.com/p/chunked-retrieved-synthesized-not" target="_blank" rel="noopener">Duane Forrester: Chunked, Retrieved, Synthesized</a></li>
+        <li><a href="https://dejan.ai/blog/how-ai-mode-selects-snippets/" target="_blank" rel="noopener">Dejan: How AI Mode Selects Snippets</a></li>
+        <li><a href="https://searchengineland.com/how-ai-mode-ai-overviews-work-patents-456346" target="_blank" rel="noopener">Search Engine Land: How AI Mode works based on patents</a></li>
+        <li><a href="https://www.chris-green.net/post/content-structure-for-ai-search" target="_blank" rel="noopener">Chris Green: Content Structure for AI Search</a></li>
+      </ul>
+
+      <h3>Data en onderzoek</h3>
+      <ul class="source-list">
+        <li><a href="https://graphite.io/five-percent/ai-is-much-bigger-than-you-think" target="_blank" rel="noopener">Graphite: AI is Much Bigger Than You Think (56% van search)</a></li>
+        <li><a href="https://www.demandsage.com/chatgpt-statistics/" target="_blank" rel="noopener">DemandSage: ChatGPT Statistics (800M gebruikers)</a></li>
+        <li><a href="https://www.nber.org/papers/w34255" target="_blank" rel="noopener">NBER Working Paper 34255: How People Use ChatGPT</a></li>
+        <li><a href="https://www.semrush.com/blog/semrush-ai-overviews-study/" target="_blank" rel="noopener">Semrush: AI Overviews Study (10M+ keywords)</a></li>
+        <li><a href="https://searchengineland.com/google-ai-overviews-search-clicks-fell-report-455498" target="_blank" rel="noopener">BrightEdge via Search Engine Land: AI Overviews clicks -30%</a></li>
+        <li><a href="https://searchengineland.com/how-to-get-cited-by-ai-seo-insights-from-8000-ai-citations-455284" target="_blank" rel="noopener">Search Engine Land: 8.000 AI citations studie</a></li>
+        <li><a href="https://www.tryprofound.com/blog/ai-platform-citation-patterns" target="_blank" rel="noopener">Profound: AI Platform Citation Patterns</a></li>
+        <li><a href="https://skai.io/blog/ai-overviews-2025-update/" target="_blank" rel="noopener">Skai: AI Overviews 2025 update (+35% clicks)</a></li>
+        <li><a href="https://maximuslabs.ai/generative-engine-optimization/geo-case-studies-success-stories" target="_blank" rel="noopener">Maximus Labs: GEO case studies (13x conversie)</a></li>
+      </ul>
+
+      <h3>Technisch</h3>
+      <ul class="source-list">
+        <li><a href="https://vercel.com/blog/the-rise-of-the-ai-crawler" target="_blank" rel="noopener">Vercel: The Rise of the AI Crawler (crawler volumes)</a></li>
+        <li><a href="https://www.getpassionfruit.com/blog/javascript-rendering-and-ai-crawlers-can-llms-read-your-spa" target="_blank" rel="noopener">Getpassionfruit: JavaScript Rendering and AI Crawlers 2026</a></li>
+        <li><a href="https://koanthic.com/en/ai-crawler-optimization-complete-guide-for-2026/" target="_blank" rel="noopener">Koanthic: AI Crawler Optimization Guide 2026</a></li>
+        <li><a href="https://www.searchviu.com/en/ai-crawlers-javascript-rendering/" target="_blank" rel="noopener">SearchVIU: AI Crawlers &amp; JavaScript Rendering</a></li>
+        <li><a href="https://platform.openai.com/docs/bots" target="_blank" rel="noopener">OpenAI: Crawler documentatie</a></li>
+        <li><a href="https://docs.perplexity.ai/guides/bots" target="_blank" rel="noopener">Perplexity: Crawler documentatie</a></li>
+        <li><a href="https://vercel.com/blog/how-were-adapting-seo-for-llms" target="_blank" rel="noopener">Vercel: How we're adapting SEO for LLMs</a></li>
+      </ul>
+
+      <h3>KPIs en meten</h3>
+      <ul class="source-list">
+        <li><a href="https://searchengineland.com/new-generative-ai-search-kpis-456497" target="_blank" rel="noopener">Duane Forrester: 12 nieuwe KPIs voor AI search</a></li>
+        <li><a href="https://www.rankability.com/blog/best-ai-search-visibility-tracking-tools/" target="_blank" rel="noopener">Rankability: 22 Best AI Search Visibility Tools</a></li>
+        <li><a href="https://backlinko.com/llm-tracking-tools" target="_blank" rel="noopener">Backlinko: 5 AI Visibility Tools</a></li>
+        <li><a href="https://peec.ai/" target="_blank" rel="noopener">Peec.ai</a></li>
+        <li><a href="https://otterly.ai/" target="_blank" rel="noopener">Otterly.ai</a></li>
+        <li><a href="https://ahrefs.com/brand-radar" target="_blank" rel="noopener">Ahrefs Brand Radar</a></li>
+      </ul>
+
+      <h3>Expert tips (via LearningSEO.io)</h3>
+      <ul class="source-list">
+        <li>Gianluca Fiorelli: semantische context en query fan-out analyse</li>
+        <li>Krinal Mehta: vergelijkingscontent publiceren</li>
+        <li>Daniel K. Cheung: declaratieve tekst, definitie-laag, schema</li>
+        <li>David Hunter: "Reviews are AI rocket fuel"</li>
+        <li>Simon Vreeman: log file analyse, product feeds</li>
+        <li>Ben Goodey: reverse engineer competitor sources</li>
+        <li>Hailey Novak: entity SEO audits</li>
+        <li>Emily Richardson: firsthand experience benadrukken</li>
+        <li>Nikola Roza: korte zinnen, korte dependency trees</li>
+      </ul>
+      <p style="font-size:0.82rem;color:var(--han-gray);">(<a href="https://learningseo.io/seo_roadmap/optimize-ai-search/" target="_blank" rel="noopener">Alle expert tips: LearningSEO.io</a>)</p>
+
+      <h3>Alles op een plek</h3>
+      <ul class="source-list">
+        <li><a href="https://learningseo.io/seo_roadmap/optimize-ai-search/" target="_blank" rel="noopener">LearningSEO.io: Optimize for AI Search (70+ bronnen)</a></li>
+        <li><a href="https://search.google.com/test/rich-results" target="_blank" rel="noopener">Google Rich Results Test (gratis)</a></li>
+        <li><a href="https://answerthepublic.com/" target="_blank" rel="noopener">AnswerThePublic (gratis)</a></li>
+      </ul>
+    </section>
+
+  </main>
+</div>
+
+<footer class="footer">
+  <strong>GEO Checklist</strong> &middot; Minor Digital Marketing &middot; HAN University of Applied Sciences &middot; Maart 2026
+</footer>
+
+<script>
+  // Active nav on scroll
+  const sections = document.querySelectorAll('.section[id]');
+  const navLinks = document.querySelectorAll('.nav-link[href^="#"]');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(l => l.classList.remove('active'));
+        const match = document.querySelector(`.nav-link[href="#${entry.target.id}"]`);
+        if (match) match.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+
+  sections.forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>
