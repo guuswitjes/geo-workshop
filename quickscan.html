@@ -397,25 +397,19 @@
     .interactive-table tr:last-child td { border-bottom: none; }
     .interactive-table tr:nth-child(even) td { background: var(--han-alabaster); }
 
-    .interactive-table textarea {
+    .interactive-table .example-text {
       display: block;
       width: 100%;
       box-sizing: border-box;
-      background: var(--han-alabaster);
-      border: 1px solid var(--han-mercury);
-      border-radius: 4px;
       padding: 0.5rem;
-      min-height: 36px;
       font-size: 0.82rem;
       font-family: var(--font-body);
-      color: var(--han-black);
-      resize: vertical;
-      outline: none;
-      transition: border-color 0.15s;
+      color: var(--han-gray);
+      font-style: italic;
     }
 
-    .interactive-table textarea::placeholder { color: var(--han-gray); }
-    .interactive-table textarea:focus { border-color: var(--han-pink); }
+    
+    
 
     /* ── CODE BLOCK ── */
     .code-block {
@@ -504,7 +498,7 @@
     .scorecard-table tr:last-child td { border-bottom: none; }
     .scorecard-table tr:nth-child(even) td { background: var(--han-alabaster); }
 
-    .scorecard-table textarea {
+    .scorecard-table .example-text {
       display: block;
       width: 100%;
       box-sizing: border-box;
@@ -516,13 +510,7 @@
       font-size: 0.82rem;
       font-family: var(--font-body);
       color: var(--han-black);
-      resize: vertical;
-      outline: none;
-      transition: border-color 0.15s;
     }
-
-    .scorecard-table textarea::placeholder { color: var(--han-gray); }
-    .scorecard-table textarea:focus { border-color: var(--han-pink); }
 
     /* ── RATING CARDS ── */
     .rating-cards {
@@ -700,22 +688,22 @@
         </thead>
         <tbody>
           <tr>
-            <td><textarea placeholder="Vraag 1..."></textarea></td>
-            <td><textarea placeholder="Genoemd? Ja/Nee"></textarea></td>
-            <td><textarea placeholder="Genoemd? Ja/Nee"></textarea></td>
-            <td><textarea placeholder="Genoemd? Ja/Nee"></textarea></td>
+            <td><span class="example-text">Vraag 1...</span></td>
+            <td><span class="example-text">Genoemd? Ja/Nee</span></td>
+            <td><span class="example-text">Genoemd? Ja/Nee</span></td>
+            <td><span class="example-text">Genoemd? Ja/Nee</span></td>
           </tr>
           <tr>
-            <td><textarea placeholder="Vraag 2..."></textarea></td>
-            <td><textarea placeholder="Genoemd? Ja/Nee"></textarea></td>
-            <td><textarea placeholder="Genoemd? Ja/Nee"></textarea></td>
-            <td><textarea placeholder="Genoemd? Ja/Nee"></textarea></td>
+            <td><span class="example-text">Vraag 2...</span></td>
+            <td><span class="example-text">Genoemd? Ja/Nee</span></td>
+            <td><span class="example-text">Genoemd? Ja/Nee</span></td>
+            <td><span class="example-text">Genoemd? Ja/Nee</span></td>
           </tr>
           <tr>
-            <td><textarea placeholder="Vraag 3..."></textarea></td>
-            <td><textarea placeholder="Genoemd? Ja/Nee"></textarea></td>
-            <td><textarea placeholder="Genoemd? Ja/Nee"></textarea></td>
-            <td><textarea placeholder="Genoemd? Ja/Nee"></textarea></td>
+            <td><span class="example-text">Vraag 3...</span></td>
+            <td><span class="example-text">Genoemd? Ja/Nee</span></td>
+            <td><span class="example-text">Genoemd? Ja/Nee</span></td>
+            <td><span class="example-text">Genoemd? Ja/Nee</span></td>
           </tr>
         </tbody>
       </table>
@@ -776,15 +764,15 @@ Disallow: /</div>
         <tbody>
           <tr>
             <td>GPTBot (ChatGPT)</td>
-            <td><textarea placeholder="Ja/Nee"></textarea></td>
+            <td><span class="example-text">Ja/Nee</span></td>
           </tr>
           <tr>
             <td>ClaudeBot (Claude)</td>
-            <td><textarea placeholder="Ja/Nee"></textarea></td>
+            <td><span class="example-text">Ja/Nee</span></td>
           </tr>
           <tr>
             <td>PerplexityBot (Perplexity)</td>
-            <td><textarea placeholder="Ja/Nee"></textarea></td>
+            <td><span class="example-text">Ja/Nee</span></td>
           </tr>
         </tbody>
       </table>
@@ -829,19 +817,19 @@ Disallow: /</div>
         </thead>
         <tbody>
           <tr>
-            <td><textarea placeholder='Bijv. "Onze producten"'></textarea></td>
-            <td><textarea placeholder='Nee'></textarea></td>
-            <td><textarea placeholder='"Welke fiets past bij mij?"'></textarea></td>
+            <td><span class="example-text">Bijv. </span></td>
+            <td><span class="example-text">Nee</span></td>
+            <td><span class="example-text"></span></td>
           </tr>
           <tr>
-            <td><textarea placeholder='Bijv. "Over ons"'></textarea></td>
-            <td><textarea placeholder='Nee'></textarea></td>
-            <td><textarea placeholder='"Wie zijn wij en wat doen we?"'></textarea></td>
+            <td><span class="example-text">Bijv. </span></td>
+            <td><span class="example-text">Nee</span></td>
+            <td><span class="example-text"></span></td>
           </tr>
           <tr>
-            <td><textarea placeholder='Bijv. "Welke maat heb ik nodig?"'></textarea></td>
-            <td><textarea placeholder='Ja'></textarea></td>
-            <td><textarea placeholder='Prima zo'></textarea></td>
+            <td><span class="example-text">Bijv. </span></td>
+            <td><span class="example-text">Ja</span></td>
+            <td><span class="example-text">Prima zo</span></td>
           </tr>
         </tbody>
       </table>
@@ -887,18 +875,18 @@ Disallow: /</div>
         <tbody>
           <tr>
             <td>Sectie 1</td>
-            <td><textarea placeholder="Ja/Nee"></textarea></td>
-            <td><textarea placeholder="Noteer de eerste zin..."></textarea></td>
+            <td><span class="example-text">Ja/Nee</span></td>
+            <td><span class="example-text">Noteer de eerste zin...</span></td>
           </tr>
           <tr>
             <td>Sectie 2</td>
-            <td><textarea placeholder="Ja/Nee"></textarea></td>
-            <td><textarea placeholder="Noteer de eerste zin..."></textarea></td>
+            <td><span class="example-text">Ja/Nee</span></td>
+            <td><span class="example-text">Noteer de eerste zin...</span></td>
           </tr>
           <tr>
             <td>Sectie 3</td>
-            <td><textarea placeholder="Ja/Nee"></textarea></td>
-            <td><textarea placeholder="Noteer de eerste zin..."></textarea></td>
+            <td><span class="example-text">Ja/Nee</span></td>
+            <td><span class="example-text">Noteer de eerste zin...</span></td>
           </tr>
         </tbody>
       </table>
@@ -952,21 +940,21 @@ Disallow: /</div>
         <tbody>
           <tr>
             <td>Afbeelding 1</td>
-            <td><textarea placeholder="Ja/Nee"></textarea></td>
-            <td><textarea placeholder='bijv. "DSC_0394"'></textarea></td>
-            <td><textarea placeholder="Ja/Nee"></textarea></td>
+            <td><span class="example-text">Ja/Nee</span></td>
+            <td><span class="example-text">bijv. </span></td>
+            <td><span class="example-text">Ja/Nee</span></td>
           </tr>
           <tr>
             <td>Afbeelding 2</td>
-            <td><textarea placeholder="Ja/Nee"></textarea></td>
-            <td><textarea placeholder='bijv. "racefiets Canyon Endurace"'></textarea></td>
-            <td><textarea placeholder="Ja/Nee"></textarea></td>
+            <td><span class="example-text">Ja/Nee</span></td>
+            <td><span class="example-text">bijv. </span></td>
+            <td><span class="example-text">Ja/Nee</span></td>
           </tr>
           <tr>
             <td>Afbeelding 3</td>
-            <td><textarea placeholder="Ja/Nee"></textarea></td>
-            <td><textarea placeholder='bijv. "" (leeg)'></textarea></td>
-            <td><textarea placeholder="Ja/Nee"></textarea></td>
+            <td><span class="example-text">Ja/Nee</span></td>
+            <td><span class="example-text">bijv. </span></td>
+            <td><span class="example-text">Ja/Nee</span></td>
           </tr>
         </tbody>
       </table>
@@ -1016,23 +1004,23 @@ Disallow: /</div>
         <tbody>
           <tr>
             <td>Is er een FAQ-pagina?</td>
-            <td><textarea placeholder="Ja/Nee"></textarea></td>
+            <td><span class="example-text">Ja/Nee</span></td>
           </tr>
           <tr>
             <td>Hoeveel vragen staan erop?</td>
-            <td><textarea placeholder="Aantal..."></textarea></td>
+            <td><span class="example-text">Aantal...</span></td>
           </tr>
           <tr>
             <td>Geeft de eerste zin van elk antwoord direct het antwoord?</td>
-            <td><textarea placeholder="Ja/Nee"></textarea></td>
+            <td><span class="example-text">Ja/Nee</span></td>
           </tr>
           <tr>
             <td>Zijn de antwoorden 40-60 woorden?</td>
-            <td><textarea placeholder="Ja/Nee"></textarea></td>
+            <td><span class="example-text">Ja/Nee</span></td>
           </tr>
           <tr>
             <td>Is het feitelijk of marketing-taal?</td>
-            <td><textarea placeholder="Feitelijk / Marketing"></textarea></td>
+            <td><span class="example-text">Feitelijk / Marketing</span></td>
           </tr>
         </tbody>
       </table>
@@ -1082,31 +1070,31 @@ Disallow: /</div>
         <tbody>
           <tr>
             <td>FAQPage</td>
-            <td><textarea placeholder="Ja/Nee"></textarea></td>
+            <td><span class="example-text">Ja/Nee</span></td>
           </tr>
           <tr>
             <td>Product</td>
-            <td><textarea placeholder="Ja/Nee"></textarea></td>
+            <td><span class="example-text">Ja/Nee</span></td>
           </tr>
           <tr>
             <td>LocalBusiness</td>
-            <td><textarea placeholder="Ja/Nee"></textarea></td>
+            <td><span class="example-text">Ja/Nee</span></td>
           </tr>
           <tr>
             <td>Organization</td>
-            <td><textarea placeholder="Ja/Nee"></textarea></td>
+            <td><span class="example-text">Ja/Nee</span></td>
           </tr>
           <tr>
             <td>BreadcrumbList</td>
-            <td><textarea placeholder="Ja/Nee"></textarea></td>
+            <td><span class="example-text">Ja/Nee</span></td>
           </tr>
           <tr>
             <td>AggregateRating</td>
-            <td><textarea placeholder="Ja/Nee"></textarea></td>
+            <td><span class="example-text">Ja/Nee</span></td>
           </tr>
           <tr>
             <td>HowTo</td>
-            <td><textarea placeholder="Ja/Nee"></textarea></td>
+            <td><span class="example-text">Ja/Nee</span></td>
           </tr>
         </tbody>
       </table>
@@ -1147,38 +1135,38 @@ Disallow: /</div>
         <tbody>
           <tr>
             <td><strong>1. Genoemd in AI?</strong></td>
-            <td><textarea placeholder=".../3 vragen"></textarea></td>
-            <td><textarea placeholder="Hoog / Midden / Laag"></textarea></td>
+            <td><span class="example-text">.../3 vragen</span></td>
+            <td><span class="example-text">Hoog / Midden / Laag</span></td>
           </tr>
           <tr>
             <td><strong>2. AI-crawlers geblokkeerd?</strong></td>
-            <td><textarea placeholder="Ja/Nee"></textarea></td>
-            <td><textarea placeholder="Hoog als ja"></textarea></td>
+            <td><span class="example-text">Ja/Nee</span></td>
+            <td><span class="example-text">Hoog als ja</span></td>
           </tr>
           <tr>
             <td><strong>3. Koppen zijn vragen?</strong></td>
-            <td><textarea placeholder=".../... koppen"></textarea></td>
-            <td><textarea placeholder="Hoog / Midden / Laag"></textarea></td>
+            <td><span class="example-text">.../... koppen</span></td>
+            <td><span class="example-text">Hoog / Midden / Laag</span></td>
           </tr>
           <tr>
             <td><strong>4. Eerste zin = antwoord?</strong></td>
-            <td><textarea placeholder=".../3 secties"></textarea></td>
-            <td><textarea placeholder="Hoog / Midden / Laag"></textarea></td>
+            <td><span class="example-text">.../3 secties</span></td>
+            <td><span class="example-text">Hoog / Midden / Laag</span></td>
           </tr>
           <tr>
             <td><strong>5. Alt-tekst aanwezig?</strong></td>
-            <td><textarea placeholder=".../... afbeeldingen"></textarea></td>
-            <td><textarea placeholder="Hoog / Midden / Laag"></textarea></td>
+            <td><span class="example-text">.../... afbeeldingen</span></td>
+            <td><span class="example-text">Hoog / Midden / Laag</span></td>
           </tr>
           <tr>
             <td><strong>6. FAQ-pagina aanwezig?</strong></td>
-            <td><textarea placeholder="Ja/Nee"></textarea></td>
-            <td><textarea placeholder="Hoog / Midden / Laag"></textarea></td>
+            <td><span class="example-text">Ja/Nee</span></td>
+            <td><span class="example-text">Hoog / Midden / Laag</span></td>
           </tr>
           <tr>
             <td><strong>7. Structured data aanwezig?</strong></td>
-            <td><textarea placeholder="... schema types"></textarea></td>
-            <td><textarea placeholder="Hoog / Midden / Laag"></textarea></td>
+            <td><span class="example-text">... schema types</span></td>
+            <td><span class="example-text">Hoog / Midden / Laag</span></td>
           </tr>
         </tbody>
       </table>
